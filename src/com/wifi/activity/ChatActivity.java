@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -55,6 +56,8 @@ public class ChatActivity extends Activity {
 	private File fileToSend;
     
     private String server;
+    
+    private String imgPath;
 
     private Button messageButton;
     
@@ -72,9 +75,19 @@ public class ChatActivity extends Activity {
     public Handler handler = new Handler() {    //新建句柄动态改变界面
     	@Override
     	public void handleMessage(Message msg) {
-           if(msg.what == 1){
+           if(msg.what == 1 && BitmapFactory.decodeFile(imgPath)!=null){
         	   //updateView("收到一张图片！");
-        	   updateImg();
+        	   updateImg(BitmapFactory.decodeFile(imgPath),R.layout.list_img_layout_income,"安卓设备");
+           }
+           else {
+        	   Log.i(TAG, "img is null");
+        	   try {
+        		   Thread.sleep(5000);
+                	   updateImg(BitmapFactory.decodeFile(imgPath),R.layout.list_img_layout_income,"安卓设备");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
            }
     	};
     };
@@ -83,6 +96,7 @@ public class ChatActivity extends Activity {
     	@Override
     	public void onReceive(Context context, Intent intent) {
     		if(intent.getStringExtra("Update").equals("update")){
+    			imgPath = intent.getStringExtra("imgPath");
     			handler.sendEmptyMessage(1);
     		}
     	}
@@ -142,10 +156,12 @@ public class ChatActivity extends Activity {
                 intent1.putExtra("port", 8888);
                 intent1.putExtra("ip", "192.168.49.1");
                 intent1.putExtra("file", fileToSend);
+                intent1.putExtra("suffix", fileToSend.getName().split("\\.")[1]);
+                Log.i(TAG, fileToSend.getName() + " selected for file transfer");
                 //intent1.putExtra("message", msgText);
                 startService(intent1);
                 //updateView(msgText);
-                updateImg();
+                updateImg(BitmapFactory.decodeFile(fileToSend.getPath()),R.layout.list_img_layout,"我");
                 }
                 else{
                 	
@@ -185,11 +201,18 @@ public class ChatActivity extends Activity {
         		{
         			if(targetDir.canRead())
         			{
+        				if(targetDir.getName().split("\\.")[1].equals("jpg")){
         				fileToSend = targetDir;
         				//filePathProvided = true;
         				
         				//setTargetFileStatus(targetDir.getName() + " selected for file transfer");
-        				Log.i(TAG, targetDir.getName() + " selected for file transfer");	    			
+        				Log.i(TAG, targetDir.getName() + " selected for file transfer");
+        				}
+        				else{
+        					new AlertDialog.Builder(ChatActivity.this)
+							.setTitle("提示").setMessage("请选择jpg格式的图片")
+							.setPositiveButton("确定", null).show();
+        				}
         			}
         			else
         			{
@@ -222,12 +245,13 @@ public class ChatActivity extends Activity {
         messageText.setText("");
     }
 
-    public void updateImg(){
+    public void updateImg(Bitmap image,int id,String name1){
     	Log.i(TAG, "更新图片信息");
-    	String name = getName();
+    	String name = name1;
     	String date = getDate();
-    	Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.download);
-    	int RId = R.layout.list_img_layout;
+    	//Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.download);
+    	Bitmap img = image;
+    	int RId = id;
     	ImgEntity imgEntity = new ImgEntity(name,date,img,RId);
     	imgList.add(imgEntity);
     	talkView.setAdapter(new ImgViewAdapter(ChatActivity.this, imgList));

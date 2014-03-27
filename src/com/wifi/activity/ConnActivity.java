@@ -299,7 +299,7 @@ public class ConnActivity extends Activity {
 
 	}
 
-	//启动服务端
+	//启动客户端
 	public void startClient(final WifiP2pInfo wifiInfo2, WifiP2pDevice device) {
 
 		new Thread(new Runnable() {
@@ -313,7 +313,8 @@ public class ConnActivity extends Activity {
 				int len = 0;
 				// String races = null;
 				try {
-					s = new Socket(wifiInfo2.groupOwnerAddress, 9527);
+					//s = new Socket(wifiInfo2.groupOwnerAddress, 9527);
+					s = new Socket("192.168.49.1", 9527);
 					outputstream = s.getOutputStream();
 					inputstream = s.getInputStream();
 					outputstream.write("1".getBytes());// 向服务器发送消息

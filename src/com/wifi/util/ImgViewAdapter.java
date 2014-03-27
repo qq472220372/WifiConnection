@@ -53,7 +53,7 @@ public class ImgViewAdapter extends BaseAdapter{
 		LinearLayout layout = new LinearLayout(context);
         LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         vi.inflate(itemLayout, layout, true);
-		
+		if(itemLayout == R.layout.list_img_layout){
         TextView tvName = (TextView) layout.findViewById(R.id.messagedetail_row_name1);
         tvName.setText(imgentity.getName());
 
@@ -62,6 +62,17 @@ public class ImgViewAdapter extends BaseAdapter{
         
         ImageView imageView = (ImageView) layout.findViewById(R.id.img_rec);
         imageView.setImageBitmap(imgentity.getImg());
+		}
+		else {
+	        TextView tvName = (TextView) layout.findViewById(R.id.messagedetail_row_name2);
+	        tvName.setText(imgentity.getName());
+
+	        TextView tvDate = (TextView) layout.findViewById(R.id.messagedetail_row_date2);
+	        tvDate.setText(imgentity.getDate());
+	        
+	        ImageView imageView = (ImageView) layout.findViewById(R.id.img_rec2);
+	        imageView.setImageBitmap(imgentity.getImg());
+		}
 
         return layout;
 	}

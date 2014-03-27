@@ -26,6 +26,7 @@ public class SendMessageService extends IntentService{
 	String ip;
 	String message;
 	File file;
+	String suffix;
 	Socket socket;
 
 	public SendMessageService() {
@@ -38,6 +39,7 @@ public class SendMessageService extends IntentService{
 		port = ((Integer) intent.getExtras().get("port")).intValue();
 		message = intent.getExtras().getString("message");
 		file = (File)intent.getExtras().get("file");
+		suffix = intent.getStringExtra("suffix");
 		
 			int len = 0;
 			OutputStream outputstream = null;

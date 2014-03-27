@@ -72,7 +72,7 @@ public class ServerService extends IntentService{
 //			}
 //		}
 			
-			String savedAs = "WDFL_File_" + System.currentTimeMillis();
+			String savedAs = "WDFL_File_" + System.currentTimeMillis()+ ".jpg";
 		    File file = new File("./sdcard", savedAs);
 			
 		    byte[] buffer = new byte[4096];
@@ -88,6 +88,7 @@ public class ServerService extends IntentService{
 			    {
 					Log.v(TAG, "Service更新主界面");
 					intent.putExtra("Update", "update");
+					intent.putExtra("imgPath", "./sdcard/"+savedAs);
 					//发送更新界面广播
 					sendBroadcast(intent);
 			    	break;

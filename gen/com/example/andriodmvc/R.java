@@ -34,22 +34,26 @@ public final class R {
         public static final int searchbg2=0x7f02000a;
     }
     public static final class id {
-        public static final int ImgButton=0x7f080010;
+        public static final int ImgButton=0x7f080014;
         public static final int MessageBox=0x7f080002;
-        public static final int MessageButton=0x7f080011;
-        public static final int action_settings=0x7f080013;
+        public static final int MessageButton=0x7f080015;
+        public static final int action_settings=0x7f080017;
         public static final int current_path=0x7f080000;
         public static final int device_list=0x7f080005;
         public static final int file_browser_listview=0x7f080001;
         public static final int img_rec=0x7f080009;
-        public static final int list=0x7f080012;
-        public static final int messagedetail_row_date=0x7f08000e;
+        public static final int img_rec2=0x7f08000f;
+        public static final int list=0x7f080016;
+        public static final int messagedetail_row_date=0x7f080012;
         public static final int messagedetail_row_date1=0x7f080008;
-        public static final int messagedetail_row_name=0x7f08000d;
+        public static final int messagedetail_row_date2=0x7f08000e;
+        public static final int messagedetail_row_name=0x7f080011;
         public static final int messagedetail_row_name1=0x7f080007;
-        public static final int messagedetail_row_text=0x7f08000f;
-        public static final int messagegedetail_rov_icon=0x7f08000c;
+        public static final int messagedetail_row_name2=0x7f08000d;
+        public static final int messagedetail_row_text=0x7f080013;
+        public static final int messagegedetail_rov_icon=0x7f080010;
         public static final int messagegedetail_rov_icon1=0x7f08000b;
+        public static final int messagegedetail_rov_icon2=0x7f08000c;
         public static final int progressBar=0x7f08000a;
         public static final int search_button=0x7f080006;
         public static final int search_status=0x7f080004;
@@ -59,9 +63,10 @@ public final class R {
         public static final int activity_file_browser=0x7f030000;
         public static final int activity_search=0x7f030001;
         public static final int list_img_layout=0x7f030002;
-        public static final int list_say_he_item=0x7f030003;
-        public static final int list_say_me_item=0x7f030004;
-        public static final int main=0x7f030005;
+        public static final int list_img_layout_income=0x7f030003;
+        public static final int list_say_he_item=0x7f030004;
+        public static final int list_say_me_item=0x7f030005;
+        public static final int main=0x7f030006;
     }
     public static final class menu {
         public static final int conn=0x7f070000;
