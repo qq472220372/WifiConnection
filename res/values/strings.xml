@@ -12,4 +12,20 @@
     <string name="select_dir">Select Directory</string>
     <string name="file_browser_title">File Browser</string>
 
+     <string name="home_tv">我的家</string>
+    <string name="style_tv">搭配</string>
+    <string name="shopping_tv">逛街</string>
+    <string name="show_tv">晒货</string>
+    <string name="login_tv">登录</string>
+    <string name="regist_tv">注册</string>
+    <string name="index_looks_tv">紧急呼叫/SOS</string>
+    <string name="index_looks_info_tv">遇到危险经济呼叫</string>
+    <string name="index_shopping_tv">人员定位/LOCATION</string>
+    <string name="index_shopping_info_tv">看看大家都在哪里</string>
+    <string name="index_show_tv">快传照片/PICTURE</string>
+    <string name="index_show_info_tv">免流量分享照片！</string>
+    <string name="index_search_tv">搜索/SEARCH</string>
+    <string name="index_search_info_tv">找找好玩的地方</string>
+    <string name="index_browse_tv">更多信息/BROWSER</string>
+    <string name="index_browse_info_tv">了解我们的软件</string>
 </resources>
