@@ -14,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,14 +23,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.andriodmvc.R;
 import com.wifi.entity.ChatMsgEntity;
+import com.wifi.entity.ImgEntity;
 import com.wifi.service.SendMessageService;
 import com.wifi.service.ServerService;
 import com.wifi.service.WiFiServerBroadcastReceiver;
 import com.wifi.util.ChatMsgViewAdapter;
+import com.wifi.util.ImgViewAdapter;
 
 /*
  * author:phy
@@ -51,11 +55,14 @@ public class ChatActivity extends Activity {
 
     public static ArrayList<ChatMsgEntity> list = new ArrayList<ChatMsgEntity>();
     
+    public  ArrayList<ImgEntity> imgList = new ArrayList<ImgEntity>();
+    
     public Handler handler = new Handler() {    //新建句柄动态改变界面
     	@Override
     	public void handleMessage(Message msg) {
            if(msg.what == 1){
-        	   updateView("收到一张图片！");
+        	   //updateView("收到一张图片！");
+        	   updateImg();
            }
     	};
     };
@@ -145,6 +152,17 @@ public class ChatActivity extends Activity {
         messageText.setText("");
     }
 
+    public void updateImg(){
+    	Log.i(TAG, "更新图片信息");
+    	String name = getName();
+    	String date = getDate();
+    	int RId = R.layout.list_img_layout;
+    	ImgEntity imgEntity = new ImgEntity(name,date,null,RId);
+    	imgList.add(imgEntity);
+    	talkView.setAdapter(new ImgViewAdapter(ChatActivity.this, imgList));
+    	messageText.setText("");
+    	
+     }
     // shuold be redefine in the future
     private String getName() {
         return getResources().getString(R.string.myDisplayName);

@@ -2,12 +2,17 @@ package com.wifi.util;
 
 import java.util.ArrayList;
 
+import com.example.andriodmvc.R;
 import com.wifi.entity.ImgEntity;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ImgViewAdapter extends BaseAdapter{
 	private static final String TAG = ChatMsgViewAdapter.class.getSimpleName();
@@ -16,6 +21,10 @@ public class ImgViewAdapter extends BaseAdapter{
 	
 	private Context context;
 
+	public ImgViewAdapter(Context ctx, ArrayList<ImgEntity> list){
+		this.imglist = list;
+		this.context = ctx;
+	}
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -36,8 +45,21 @@ public class ImgViewAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		return null;
+		Log.v(TAG, "getView>>>>>>>");
+		ImgEntity imgentity = imglist.get(position);
+		int itemLayout = imgentity.getLayoutID();
+		
+		LinearLayout layout = new LinearLayout(context);
+        LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        vi.inflate(itemLayout, layout, true);
+		
+        TextView tvName = (TextView) layout.findViewById(R.id.messagedetail_row_name1);
+        tvName.setText(imgentity.getName());
+
+        TextView tvDate = (TextView) layout.findViewById(R.id.messagedetail_row_date1);
+        tvDate.setText(imgentity.getDate());
+
+        return layout;
 	}
 
 }
