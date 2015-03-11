@@ -54,7 +54,7 @@ public class WiFiServerBroadcastReceiver extends BroadcastReceiver {
         this.channel = channel;
         this.activity = activity;
         
-    	//activity.setServerStatus("Server Broadcast Receiver created");
+    	activity.setServiceStatus("Server Broadcast Receiver created");
 
     }
 

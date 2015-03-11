@@ -75,7 +75,7 @@ public class ConnActivity extends Activity {
     	serverThreadActive = false;
     	
         registerReceiver(wifiServerReceiver, wifiServerReceiverIntentFilter);
-        //startServer(R.id.search_status);
+        startServer(R.id.search_status);
 	}
 
 	@Override
@@ -106,36 +106,25 @@ public void startServer(final int statusId) {
 		    	        	serverThreadActive = false;	
 		    	        	
 		    	        			    	        	
-//		    	        	final TextView server_status_text = (TextView) findViewById(R.id.server_status_text);
-//		    	        	server_status_text.post(new Runnable() {
-//		    	                public void run() {
-//				    	        	server_status_text.setText(R.string.server_stopped);
-//		    	                }
-//		    	        	});	
-		    	        	final TextView text = (TextView)findViewById(statusId);
-		    	        	text.post(new Runnable() {
+		    	        	final TextView server_status_text = (TextView) findViewById(R.id.search_status);
+		    	        	server_status_text.post(new Runnable() {
 		    	                public void run() {
-				    	        	text.setText("stopped!");
+				    	        	server_status_text.append("Server stopped");
 		    	                }
-				    	        	});	
+		    	        	});	
 		 
 		    	        			    	        			    	        	
 		    	        }
 		    	        else
 		    	        {    	        	
-//		    	        	final TextView server_file_status_text = (TextView) findViewById(R.id.server_file_transfer_status);
-//
-//		    	        	server_file_status_text.post(new Runnable() {
-//		    	                public void run() {
-//		    	                	server_file_status_text.setText((String)resultData.get("message"));
-//		    	                }
-//		    	        	});		   
-		    	        	final TextView text = (TextView)findViewById(statusId);
-		    	        	text.post(new Runnable() {
+		    	        	final TextView server_file_status_text = (TextView) findViewById(R.id.search_status);
+
+		    	        	server_file_status_text.post(new Runnable() {
 		    	                public void run() {
-				    	        	text.setText((String)resultData.get("message"));
+		    	                	server_file_status_text.setText((String)resultData.get("message"));
 		    	                }
-				    	        	});	
+		    	        	});		   
+
 		    	        }
 	    	    	}
 	    	           	        
@@ -146,19 +135,15 @@ public void startServer(final int statusId) {
 	        startService(serverServiceIntent);
 	
 	    	//Set status to running
-//	    	TextView serverServiceStatus = (TextView) findViewById(R.id.server_status_text);
-//	    	serverServiceStatus.setText(R.string.server_running);
-	        TextView text = (TextView)findViewById(statusId);
-	        text.setText("Running");
+	    	TextView serverServiceStatus = (TextView) findViewById(R.id.search_status);
+	    	serverServiceStatus.append("Server is running");
 	    	
 	    }
     	else
     	{
 	    	//Set status to already running
-//	    	TextView serverServiceStatus = (TextView) findViewById(R.id.server_status_text);
-//	    	serverServiceStatus.setText("The server is already running");
-	        TextView text = (TextView)findViewById(statusId);
-	        text.setText("The server is already running");
+	    	TextView serverServiceStatus = (TextView) findViewById(R.id.search_status);
+	    	serverServiceStatus.append("The server is already running");
     		
     	}
     }
@@ -261,6 +246,7 @@ public void startServer(final int statusId) {
     	wifiManager.connect(wifichannel, config, new WifiP2pManager.ActionListener()  {
     	    public void onSuccess() {
     	    	
+    	    	
     	    	//setClientStatus("Connection to " + targetDevice.deviceName + " sucessful");
     	    }
 
@@ -302,4 +288,15 @@ public void startServer(final int statusId) {
 		}      
     }
     
+    public void setServiceStatus(String message)
+    {
+    	TextView clientStatusText = (TextView) findViewById(R.id.search_status);
+    	clientStatusText.append(message);	
+    }
+    
+    public void setServerStatus(String message)
+    {
+    	TextView server_status_text = (TextView) findViewById(R.id.search_status);
+    	server_status_text.append(message);	
+    }
 }
