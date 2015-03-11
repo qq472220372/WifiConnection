@@ -1,28 +1,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ConnActivity" >
+<RelativeLayout
+    android:id="@+id/MessageBox"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:gravity="center"
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/search_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/search_title" />
-        <TextView
-        android:id="@+id/search_status"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"/>
-    <ListView 
-    android:id="@+id/list"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:layout_alignParentTop = "true"/>
+      <TextView
+      		android:layout_width = "wrap_content"
+      		android:layout_height = "wrap_content"
+      		android:text = "设备列表"
+      		android:textSize="10pt"
+      		android:id = "@+id/title1"
+      />
+                  <TextView
+      		android:layout_width = "wrap_content"
+      		android:layout_height = "wrap_content"
+      		android:layout_below="@+id/title1"
+      		android:layout_toLeftOf="@+id/title1"
+      		android:layout_marginTop="15dp" 
+      		android:text = "连接状态"
+      		android:textSize="10pt"
+      		android:id = "@+id/status"
+      />
+
+            
+      <Button
+      		android:layout_width = "wrap_content"
+      		android:layout_height = "50dip"
+      		android:text ="搜索设备"
+      		android:layout_below="@+id/status"
+      		android:layout_toEndOf="@+id/status"
+      		android:layout_marginTop="15dp" 
+      		android:textSize="10pt"
+      		android:id = "@+id/search_status"
+      />
+      </RelativeLayout>
+
+        <ListView
+            android:id="@+id/device_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/MessageBox" />
 
 </RelativeLayout>

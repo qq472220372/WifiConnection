@@ -2,23 +2,33 @@ package com.wifi.activity;
 
 
 import java.io.File;
+import java.util.ArrayList;
 
 import com.example.andriodmvc.R;
 import com.wifi.service.ServerService;
 import com.wifi.service.WiFiServerBroadcastReceiver;
 
+import android.net.wifi.p2p.WifiP2pConfig;
+import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ConnActivity extends Activity {
 	
@@ -42,6 +52,11 @@ public class ConnActivity extends Activity {
 	
 	private boolean serverThreadActive;
 	
+	private WifiP2pDevice targetDevice;
+	
+	private WifiP2pInfo wifiInfo;
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,7 +75,7 @@ public class ConnActivity extends Activity {
     	serverThreadActive = false;
     	
         registerReceiver(wifiServerReceiver, wifiServerReceiverIntentFilter);
-        startServer(R.id.search_status);
+        //startServer(R.id.search_status);
 	}
 
 	@Override
@@ -114,7 +129,13 @@ public void startServer(final int statusId) {
 //		    	                public void run() {
 //		    	                	server_file_status_text.setText((String)resultData.get("message"));
 //		    	                }
-//		    	        	});		    	   		    	        	
+//		    	        	});		   
+		    	        	final TextView text = (TextView)findViewById(statusId);
+		    	        	text.post(new Runnable() {
+		    	                public void run() {
+				    	        	text.setText((String)resultData.get("message"));
+		    	                }
+				    	        	});	
 		    	        }
 	    	    	}
 	    	           	        
@@ -127,6 +148,8 @@ public void startServer(final int statusId) {
 	    	//Set status to running
 //	    	TextView serverServiceStatus = (TextView) findViewById(R.id.server_status_text);
 //	    	serverServiceStatus.setText(R.string.server_running);
+	        TextView text = (TextView)findViewById(statusId);
+	        text.setText("Running");
 	    	
 	    }
     	else
@@ -134,6 +157,8 @@ public void startServer(final int statusId) {
 	    	//Set status to already running
 //	    	TextView serverServiceStatus = (TextView) findViewById(R.id.server_status_text);
 //	    	serverServiceStatus.setText("The server is already running");
+	        TextView text = (TextView)findViewById(statusId);
+	        text.setText("The server is already running");
     		
     	}
     }
@@ -158,6 +183,94 @@ public void startServer(final int statusId) {
 //        startActivity(clientStartIntent);    		
 //    }   
     
+    public void searchForPeers(View view) {
+        
+        //Discover peers, no call back method given
+        wifiManager.discoverPeers(wifichannel, null);
+
+    }
+    
+    public void displayPeers(final WifiP2pDeviceList peers)
+    {
+    	//Dialog to show errors/status
+		final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		dialog.setTitle("WiFi Direct File Transfer");
+		
+		//Get list view
+    	ListView peerView = (ListView) findViewById(R.id.device_list);
+    	
+    	//Make array list
+    	ArrayList<String> peersStringArrayList = new ArrayList<String>();
+    	
+    	//Fill array list with strings of peer names
+    	for(WifiP2pDevice wd : peers.getDeviceList())
+    	{
+    		peersStringArrayList.add(wd.deviceName);
+    	}
+    	
+    	//Set list view as clickable
+    	peerView.setClickable(true);
+    	   
+    	//Make adapter to connect peer data to list view
+    	ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, peersStringArrayList.toArray());    			
+    	
+    	//Show peer data in listview
+    	peerView.setAdapter(arrayAdapter);
+    		
+    	
+		peerView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View view, int arg2,long arg3) {
+				
+				//Get string from textview
+				TextView tv = (TextView) view;
+				
+				WifiP2pDevice device = null;
+				
+				//Search all known peers for matching name
+		    	for(WifiP2pDevice wd : peers.getDeviceList())
+		    	{
+		    		if(wd.deviceName.equals(tv.getText()))
+		    			device = wd;		    			
+		    	}
+				
+				if(device != null)
+				{
+					//Connect to selected peer
+					connectToPeer(device);
+										
+				}
+				else
+				{
+					dialog.setMessage("Failed");
+					dialog.show();
+										
+				}							
+			}			
+				// TODO Auto-generated method stub				
+			});
+  	
+    }
+        
+    public void connectToPeer(final WifiP2pDevice wifiPeer)
+    {
+    	this.targetDevice = wifiPeer;
+    	
+    	WifiP2pConfig config = new WifiP2pConfig();
+    	config.deviceAddress = wifiPeer.deviceAddress;
+    	wifiManager.connect(wifichannel, config, new WifiP2pManager.ActionListener()  {
+    	    public void onSuccess() {
+    	    	
+    	    	//setClientStatus("Connection to " + targetDevice.deviceName + " sucessful");
+    	    }
+
+    	    public void onFailure(int reason) {
+    	    	//setClientStatus("Connection to " + targetDevice.deviceName + " failed");
+
+    	    }
+    	});    	
+    
+    }
     
     @Override
     protected void onResume() {
@@ -188,4 +301,5 @@ public void startServer(final int statusId) {
 			// Do nothing in this case.
 		}      
     }
+    
 }
