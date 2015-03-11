@@ -3,36 +3,21 @@ package com.wifi.activity;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.example.andriodmvc.R;
-import com.wifi.entity.ChatMsgEntity;
-import com.wifi.util.ChatMsgViewAdapter;
-
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.andriodmvc.R;
+import com.wifi.entity.ChatMsgEntity;
+import com.wifi.service.WiFiServerBroadcastReceiver;
+import com.wifi.util.ChatMsgViewAdapter;
+
 public class ChatActivity extends Activity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.main);
-//    }
-//
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
     
 	private static final String TAG = ChatActivity.class.getSimpleName();;
 
@@ -45,7 +30,8 @@ public class ChatActivity extends Activity {
     // private ChatMsgViewAdapter myAdapter;
 
     private ArrayList<ChatMsgEntity> list = new ArrayList<ChatMsgEntity>();
-
+    
+	
     public void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "onCreate >>>>>>");
         super.onCreate(savedInstanceState);
@@ -75,6 +61,7 @@ public class ChatActivity extends Activity {
 
         };
         messageButton.setOnClickListener(messageButtonListener);
+        
     }
 
     // shuold be redefine in the future

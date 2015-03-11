@@ -3,8 +3,11 @@
 
     <string name="app_name">WifiConnection</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="search_title">设备列表</string>
     <string name="hello">Hello World, ChatActivity!</string>
     <string name="myDisplayName">我</string>
+    <string name="title_activity_search">MainActivity</string>
+    <string name="title_activity_conn">ConnActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
