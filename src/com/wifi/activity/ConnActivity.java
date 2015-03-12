@@ -75,7 +75,7 @@ public class ConnActivity extends Activity {
     	serverThreadActive = false;
     	
         registerReceiver(wifiServerReceiver, wifiServerReceiverIntentFilter);
-        startServer(R.id.search_status);
+        //startServer(R.id.search_status);
 	}
 
 	@Override
@@ -171,7 +171,20 @@ public void startServer(final int statusId) {
     public void searchForPeers(View view) {
         
         //Discover peers, no call back method given
-        wifiManager.discoverPeers(wifichannel, null);
+        //wifiManager.discoverPeers(wifichannel, null);
+    	wifiManager.discoverPeers(wifichannel, new WifiP2pManager.ActionListener() {
+    	    @Override
+    	    public void onSuccess() {
+    	    	TextView server_status_text = (TextView) findViewById(R.id.search_status);
+    	    	server_status_text.append("Device Finded!");	
+    	    }
+
+    	    @Override
+    	    public void onFailure(int reasonCode) {
+    	    	TextView server_status_text = (TextView) findViewById(R.id.search_status);
+    	    	server_status_text.append("No Device Finded!");
+    	    }
+    	});
 
     }
     
@@ -298,5 +311,11 @@ public void startServer(final int statusId) {
     {
     	TextView server_status_text = (TextView) findViewById(R.id.search_status);
     	server_status_text.append(message);	
+    }
+    
+    public void setServerWifiStatus(String msg)
+    {
+    	TextView server_status_text = (TextView) findViewById(R.id.search_status);
+    	server_status_text.append(msg);	
     }
 }
