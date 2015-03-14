@@ -1,13 +1,20 @@
 package com.wifi.activity;
 
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import com.example.andriodmvc.R;
 import com.wifi.service.ServerService;
 import com.wifi.service.WiFiServerBroadcastReceiver;
 
+import android.net.wifi.WifiInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
@@ -22,6 +29,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -56,7 +64,13 @@ public class ConnActivity extends Activity {
 	
 	private WifiP2pInfo wifiInfo;
 
+	String tag = "ConnActivity";
 	
+	WifiP2pInfo ServerWifiInfo = null;
+	
+	WifiP2pDevice ServerDevice = null;
+	
+	ServerSocket serverSocket = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -76,6 +90,28 @@ public class ConnActivity extends Activity {
     	
         registerReceiver(wifiServerReceiver, wifiServerReceiverIntentFilter);
         //startServer(R.id.search_status);
+        
+		new Thread(new Runnable() {
+			public void run() {
+//				setText("已启动\n");
+				Log.i(tag,"已启动");
+			    try {
+					serverSocket = new ServerSocket(5000);
+//					setText("监听中\n");
+					Log.i(tag,"监听中");
+					while(true){
+					Socket s= serverSocket.accept();
+					client c= new client(s);
+					new Thread(c).start();
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}).start();
+		
 	}
 
 	@Override
@@ -176,7 +212,8 @@ public void startServer(final int statusId) {
     	    @Override
     	    public void onSuccess() {
     	    	TextView server_status_text = (TextView) findViewById(R.id.search_status);
-    	    	server_status_text.append("Device Finded!");	
+    	    	server_status_text.append("Device Finded!");
+    	    	
     	    }
 
     	    @Override
@@ -236,7 +273,10 @@ public void startServer(final int statusId) {
 				{
 					//Connect to selected peer
 					connectToPeer(device);
-										
+					
+	    	    	if(ServerWifiInfo!=null){
+	        	    	startClient(ServerWifiInfo, ServerDevice);
+	        	    	}
 				}
 				else
 				{
@@ -259,10 +299,13 @@ public void startServer(final int statusId) {
     	wifiManager.connect(wifichannel, config, new WifiP2pManager.ActionListener()  {
     	    public void onSuccess() {
     	    	
-    	    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
-    	    	ConnActivity.this.startActivity(startchat);
+//    	    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
+//    	    	ConnActivity.this.startActivity(startchat);
     	    	
     	    	//setClientStatus("Connection to " + targetDevice.deviceName + " sucessful");
+//    	    	if(ServerWifiInfo!=null&&ServerDevice!=null){
+//    	    	startClient(ServerWifiInfo, ServerDevice);
+//    	    	}
     	    }
 
     	    public void onFailure(int reason) {
@@ -271,6 +314,44 @@ public void startServer(final int statusId) {
     	    }
     	});    	
     
+    }
+    
+    public void startClient(final WifiP2pInfo wifiInfo2, WifiP2pDevice device){
+
+    	try{
+		serverSocket.close();
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	}
+
+    	try {
+			new Thread(new Runnable() {
+				Socket client = new Socket(wifiInfo2.groupOwnerAddress, 5000);
+				@Override
+				public void run() {
+					try {				
+						DataOutputStream os = new DataOutputStream(client.getOutputStream());
+						DataInputStream in = new DataInputStream(client.getInputStream());
+						
+						os.writeInt(1);
+						
+						if(in.readInt()==1){
+					    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
+					    	ConnActivity.this.startActivity(startchat);
+						}
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			}).start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
     
     @Override
@@ -320,4 +401,51 @@ public void startServer(final int statusId) {
     	TextView server_status_text = (TextView) findViewById(R.id.search_status);
     	server_status_text.append(msg);	
     }
+    
+	class client implements Runnable{
+        Socket s;
+		public client(Socket s){
+			this.s=s;
+			
+		}
+		@Override
+		public void run() {
+			DataOutputStream os = null;
+			DataInputStream in = null;
+        try{
+				os = new DataOutputStream(s.getOutputStream());
+				in = new DataInputStream(s.getInputStream());
+				
+				if(in.readInt()==1){
+					
+					os.writeInt(2);
+					
+			    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
+			    	ConnActivity.this.startActivity(startchat);
+			    	
+				}
+				
+				
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			os.close();
+			in.close();
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+	}
+
+	public void getWifiInfo(WifiP2pInfo wifiInfo2, WifiP2pDevice device) {
+		
+		ServerWifiInfo = wifiInfo2;
+		ServerDevice = device;
+		
+	}
+    
 }
