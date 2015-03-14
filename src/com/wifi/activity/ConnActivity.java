@@ -259,6 +259,8 @@ public void startServer(final int statusId) {
     	wifiManager.connect(wifichannel, config, new WifiP2pManager.ActionListener()  {
     	    public void onSuccess() {
     	    	
+    	    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
+    	    	ConnActivity.this.startActivity(startchat);
     	    	
     	    	//setClientStatus("Connection to " + targetDevice.deviceName + " sucessful");
     	    }

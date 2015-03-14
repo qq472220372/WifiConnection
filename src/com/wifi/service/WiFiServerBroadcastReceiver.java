@@ -78,9 +78,19 @@ public class WiFiServerBroadcastReceiver extends BroadcastReceiver {
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
         	
     	    if (manager != null) {
-    	    	WifiP2pDeviceList devicelist = new WifiP2pDeviceList();
+    	    	
+    	    	activity.setServerWifiStatus("Wifi Peers Changed");
+    	    	
+    	    	myPeerListListener = new PeerListListener() {
+					
+					@Override
+					public void onPeersAvailable(WifiP2pDeviceList peers) {
+						
+						activity.displayPeers(peers);
+						
+					}
+				};
     	    	manager.requestPeers(channel, myPeerListListener);
-    	    	myPeerListListener.onPeersAvailable(devicelist);
     	    }
     	    
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
