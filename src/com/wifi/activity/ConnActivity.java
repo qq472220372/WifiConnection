@@ -1,11 +1,15 @@
 package com.wifi.activity;
 
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -95,20 +99,64 @@ public class ConnActivity extends Activity {
 			public void run() {
 //				setText("已启动\n");
 				Log.i(tag,"已启动");
-			    try {
-					serverSocket = new ServerSocket(5000);
-//					setText("监听中\n");
-					Log.i(tag,"监听中");
-					while(true){
-					Socket s= serverSocket.accept();
-					client c= new client(s);
-					new Thread(c).start();
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//			    try {
+//					serverSocket = new ServerSocket(5000);
+////					setText("监听中\n");
+//					Log.i(tag,"监听中");
+//					while(true){
+//					Socket s= serverSocket.accept();
+//					client c= new client(s);
+//					new Thread(c).start();
+//					}
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 				
+				String reces = null;
+				int len;
+				Socket socket = null;
+				OutputStream outputstream = null;
+				InputStream inputstream = null;
+				byte[] rece = new byte[1000];
+				try {
+					ServerSocket serversocket = new ServerSocket(9527); 
+					// 服务器的套接字，端口为9527
+					Log.i(tag,"监听中");
+					while (true) {
+						socket = serversocket.accept();
+						inputstream = socket.getInputStream();// 得到输入流
+						outputstream = socket.getOutputStream();// 得到输出流
+						len = inputstream.read(rece);// 接受客户端消息
+						if (len != 0){
+							reces = new String(rece, 0, len);
+						if(reces.equals("1")){
+					    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
+					    	ConnActivity.this.startActivity(startchat);
+						}
+						else {
+							setServerStatus("Recive false");
+						}
+						}
+						
+//						System.out.println(reces);
+//						BufferedReader bufferreader = new BufferedReader(
+//								new InputStreamReader(System.in));
+//						outputstream.write(("服务器....."+bufferreader.readLine()).getBytes());// 返回给客户端的欢迎信息
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						inputstream.close();
+						outputstream.close();
+						socket.close();// 记住一定要关闭这些输入，输出流和套接字
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
 			}
 		}).start();
 		
@@ -324,33 +372,45 @@ public void startServer(final int statusId) {
     		e.printStackTrace();
     	}
 
-    	try {
-			new Thread(new Runnable() {
-				Socket client = new Socket(wifiInfo2.groupOwnerAddress, 5000);
-				@Override
-				public void run() {
-					try {				
-						DataOutputStream os = new DataOutputStream(client.getOutputStream());
-						DataInputStream in = new DataInputStream(client.getInputStream());
-						
-						os.writeInt(1);
-						
-						if(in.readInt()==1){
-					    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
-					    	ConnActivity.this.startActivity(startchat);
+    	new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				Socket s = null;
+				OutputStream outputstream = null;
+				InputStream inputstream = null;
+				byte[] rece = new byte[1000];
+				int len = 0;
+				String races = null;
+				while(true){
+				try {				
+//						DataOutputStream os = new DataOutputStream(client.getOutputStream());
+//						DataInputStream in = new DataInputStream(client.getInputStream());
+//						
+//						os.writeInt(1);
+					s = new Socket(wifiInfo2.groupOwnerAddress, 9527);
+					outputstream = s.getOutputStream();
+					inputstream = s.getInputStream();
+					outputstream.write("1".getBytes());// 向服务器发送消息
+					len = inputstream.read(rece);
+					if(len != 0){
+						races = new String(rece, 0, len);
+						if(races.equals("2")){
+				    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
+				    	ConnActivity.this.startActivity(startchat);
 						}
-						
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						else{
+							setServerStatus("Recieve false");
+						}
 					}
 					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			}).start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				}
+			}
+		}).start();
     	
     }
     
