@@ -33,6 +33,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -127,6 +128,7 @@ public class ConnActivity extends Activity {
 						socket = serversocket.accept();
 						inputstream = socket.getInputStream();// 得到输入流
 						outputstream = socket.getOutputStream();// 得到输出流
+						outputstream.write("2".getBytes());// 向客户端发送消息
 						len = inputstream.read(rece);// 接受客户端消息
 						if (len != 0){
 							reces = new String(rece, 0, len);
@@ -293,6 +295,7 @@ public void startServer(final int statusId) {
     	
     	//Set list view as clickable
     	peerView.setClickable(true);
+    	peerView.setBackgroundColor(Color.WHITE);
     	   
     	//Make adapter to connect peer data to list view
     	ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, peersStringArrayList.toArray());    			
@@ -366,11 +369,11 @@ public void startServer(final int statusId) {
     
     public void startClient(final WifiP2pInfo wifiInfo2, WifiP2pDevice device){
 
-    	try{
-		serverSocket.close();
-    	}catch(IOException e){
-    		e.printStackTrace();
-    	}
+//    	try{
+//		serverSocket.close();
+//    	}catch(IOException e){
+//    		e.printStackTrace();
+//    	}
 
     	new Thread(new Runnable() {
 
