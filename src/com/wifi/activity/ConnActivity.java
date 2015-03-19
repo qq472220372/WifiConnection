@@ -76,6 +76,8 @@ public class ConnActivity extends Activity {
 	WifiP2pDevice ServerDevice = null;
 	
 	ServerSocket serverSocket = null;
+	
+	private Thread serverThread = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -94,74 +96,8 @@ public class ConnActivity extends Activity {
     	serverThreadActive = false;
     	
         registerReceiver(wifiServerReceiver, wifiServerReceiverIntentFilter);
-        //startServer(R.id.search_status);
+        startServer();
         
-		new Thread(new Runnable() {
-			public void run() {
-//				setText("已启动\n");
-				Log.i(tag,"已启动");
-//			    try {
-//					serverSocket = new ServerSocket(5000);
-////					setText("监听中\n");
-//					Log.i(tag,"监听中");
-//					while(true){
-//					Socket s= serverSocket.accept();
-//					client c= new client(s);
-//					new Thread(c).start();
-//					}
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-				
-				String reces = null;
-				int len;
-				Socket socket = null;
-				OutputStream outputstream = null;
-				InputStream inputstream = null;
-				byte[] rece = new byte[1000];
-				try {
-					ServerSocket serversocket = new ServerSocket(9527); 
-					// 服务器的套接字，端口为9527
-					Log.i(tag,"监听中");
-					while (true) {
-						socket = serversocket.accept();
-						inputstream = socket.getInputStream();// 得到输入流
-						outputstream = socket.getOutputStream();// 得到输出流
-						outputstream.write("2".getBytes());// 向客户端发送消息
-						len = inputstream.read(rece);// 接受客户端消息
-						if (len != 0){
-							reces = new String(rece, 0, len);
-						if(reces.equals("1")){
-					    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
-					    	ConnActivity.this.startActivity(startchat);
-						}
-						else {
-							setServerStatus("Recive false");
-						}
-						}
-						
-//						System.out.println(reces);
-//						BufferedReader bufferreader = new BufferedReader(
-//								new InputStreamReader(System.in));
-//						outputstream.write(("服务器....."+bufferreader.readLine()).getBytes());// 返回给客户端的欢迎信息
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						inputstream.close();
-						outputstream.close();
-						socket.close();// 记住一定要关闭这些输入，输出流和套接字
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-			}
-		}).start();
-		
 	}
 
 	@Override
@@ -171,67 +107,66 @@ public class ConnActivity extends Activity {
 		return true;
 	}
 
-public void startServer(final int statusId) {
+public void startServer() {
     	
-    	//If server is already listening on port or transfering data, do not attempt to start server service 
-    	if(!serverThreadActive)
-    	{
-	    	//Create new thread, open socket, wait for connection, and transfer file 
-	
-	    	serverServiceIntent = new Intent(this, ServerService.class);
-	    	serverServiceIntent.putExtra("saveLocation", downloadTarget);
-	    	serverServiceIntent.putExtra("port", new Integer(port));
-	    	serverServiceIntent.putExtra("serverResult", new ResultReceiver(null) {
-	    	    @Override
-	    	    protected void onReceiveResult(int resultCode, final Bundle resultData) {
-	    	    	
-	    	    	if(resultCode == port )
-	    	    	{
-		    	        if (resultData == null) {
-		    	           //Server service has shut down. Download may or may not have completed properly. 
-		    	        	serverThreadActive = false;	
-		    	        	
-		    	        			    	        	
-		    	        	final TextView server_status_text = (TextView) findViewById(R.id.search_status);
-		    	        	server_status_text.post(new Runnable() {
-		    	                public void run() {
-				    	        	server_status_text.append("Server stopped");
-		    	                }
-		    	        	});	
-		 
-		    	        			    	        			    	        	
-		    	        }
-		    	        else
-		    	        {    	        	
-		    	        	final TextView server_file_status_text = (TextView) findViewById(R.id.search_status);
+	  new Thread(new Runnable() {
+		public void run() {
+			
+			Log.i(tag,"Server已启动");
+			
+			String reces = null;
+			int len = 0;
+			Socket socket = null;
+			OutputStream outputstream = null;
+			InputStream inputstream = null;
+			byte[] rece = new byte[1000];
+			try {
+				serverSocket = new ServerSocket(9527); 
+				socket = serverSocket.accept();
+				inputstream = socket.getInputStream();// 得到输入流
+				outputstream = socket.getOutputStream();// 得到输出流
+				// 服务器的套接字，端口为9527
+				Log.i(tag,"监听中");
+				while (true) {
+					//outputstream.write("2".getBytes());// 向客户端发送消息
+					len = inputstream.read(rece);// 接受客户端消息
+					if (len != 0){
+						reces = new String(rece, 0, len);
+					if(reces.equals("1")){
+				    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
+				    	startActivity(startchat);
+						outputstream.write("2".getBytes());
+						Log.i(tag,"服务端接收客户端消息成功！");
+						inputstream.close();
+						outputstream.close();
+						socket.close();
+					}
+					else {
+						Log.i(tag,"服务端接收客户端消息失败！");
+					}
+					}
+					
+//					System.out.println(reces);
+//					BufferedReader bufferreader = new BufferedReader(
+//							new InputStreamReader(System.in));
+//					outputstream.write(("服务器....."+bufferreader.readLine()).getBytes());// 返回给客户端的欢迎信息
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					inputstream.close();
+					outputstream.close();
+					socket.close();// 记住一定要关闭这些输入，输出流和套接字
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-		    	        	server_file_status_text.post(new Runnable() {
-		    	                public void run() {
-		    	                	server_file_status_text.setText((String)resultData.get("message"));
-		    	                }
-		    	        	});		   
+			}
+		}
+	}).start();
 
-		    	        }
-	    	    	}
-	    	           	        
-	    	    }
-	    	});
-	    		    		
-	    	serverThreadActive = true;
-	        startService(serverServiceIntent);
-	
-	    	//Set status to running
-	    	TextView serverServiceStatus = (TextView) findViewById(R.id.search_status);
-	    	serverServiceStatus.append("Server is running");
-	    	
-	    }
-    	else
-    	{
-	    	//Set status to already running
-	    	TextView serverServiceStatus = (TextView) findViewById(R.id.search_status);
-	    	serverServiceStatus.append("The server is already running");
-    		
-    	}
     }
     
     public void stopServer(View view) {
@@ -368,7 +303,7 @@ public void startServer(final int statusId) {
     }
     
     public void startClient(final WifiP2pInfo wifiInfo2, WifiP2pDevice device){
-
+//    	if(serverSocket!=null)
 //    	try{
 //		serverSocket.close();
 //    	}catch(IOException e){
@@ -384,26 +319,36 @@ public void startServer(final int statusId) {
 				InputStream inputstream = null;
 				byte[] rece = new byte[1000];
 				int len = 0;
-				String races = null;
+				//String races = null;
+				try {
+					s = new Socket(wifiInfo2.groupOwnerAddress, 9527);
+					outputstream = s.getOutputStream();
+					inputstream = s.getInputStream();
+					outputstream.write("1".getBytes());// 向服务器发送消息
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 				while(true){
 				try {				
 //						DataOutputStream os = new DataOutputStream(client.getOutputStream());
 //						DataInputStream in = new DataInputStream(client.getInputStream());
 //						
 //						os.writeInt(1);
-					s = new Socket(wifiInfo2.groupOwnerAddress, 9527);
-					outputstream = s.getOutputStream();
-					inputstream = s.getInputStream();
-					outputstream.write("1".getBytes());// 向服务器发送消息
 					len = inputstream.read(rece);
 					if(len != 0){
-						races = new String(rece, 0, len);
+						String races = new String(rece, 0, len);
 						if(races.equals("2")){
 				    	Intent startchat = new Intent(ConnActivity.this,ChatActivity.class);
 				    	ConnActivity.this.startActivity(startchat);
+							Log.i(tag,"客户端接收服务端消息成功！");
+							outputstream.close();
+							inputstream.close();
+							s.close();
 						}
 						else{
-							setServerStatus("Recieve false");
+							Log.i(tag,"客户端接收服务端消息失败！");
 						}
 					}
 					
