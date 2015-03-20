@@ -3,15 +3,20 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
-  android:gravity="right"
-  android:layout_marginTop="10px"
-  android:layout_marginRight="10px"
+  android:orientation="horizontal"
   >
+  <ImageView
+      android:layout_width="42px"
+      android:layout_height="42px"
+      android:layout_gravity="bottom"
+      android:id="@+id/messagegedetail_rov_icon"
+      android:background="@drawable/retouxiang"
+  />
   <LinearLayout
       android:orientation="vertical"
-      android:layout_width="300px"
+      android:layout_width="249px"
       android:layout_height="wrap_content"
-      android:background="@drawable/outgoing"
+      android:background="@drawable/incoming"
   >    
       <LinearLayout
           android:orientation="horizontal"
@@ -45,11 +50,4 @@
           android:textSize="16dip"
       />
   </LinearLayout>
-  <ImageView
-      android:layout_width="42px"
-      android:layout_height="42px"
-      android:layout_gravity="bottom"
-      android:id="@+id/messagegedetail_rov_icon"
-      android:background="@drawable/retouxiang"
-  />
 </LinearLayout>
