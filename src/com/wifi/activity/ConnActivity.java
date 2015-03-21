@@ -117,7 +117,7 @@ public class ConnActivity extends Activity {
 		new Thread(new Runnable() {
 			public void run() {
 
-				Log.i(tag, "Server已启动");
+				Log.v(tag, "Server已启动");
 
 				String reces = null;
 				int len = 0;
@@ -131,7 +131,7 @@ public class ConnActivity extends Activity {
 					inputstream = socket.getInputStream();// 得到输入流
 					outputstream = socket.getOutputStream();// 得到输出流
 					// 服务器的套接字，端口为9527
-					Log.i(tag, "监听中");
+					Log.v(tag, "监听中");
 					while (true) {
 						// outputstream.write("2".getBytes());// 向客户端发送消息
 						len = inputstream.read(rece);// 接受客户端消息
@@ -139,18 +139,22 @@ public class ConnActivity extends Activity {
 							reces = new String(rece, 0, len);
 							if (reces.equals("1")) {
 								outputstream.write("2".getBytes());
-								Log.i(tag, "服务端接收客户端消息成功！2");
-							} else if (reces.equals("3")) {
+								Log.v(tag, "服务端接收客户端消息成功！2");
 								Intent startchat = new Intent(
 										ConnActivity.this, ChatActivity.class);
 								startchat.putExtra("ServerWifiInfo", "localhost");
 								ConnActivity.this.startActivity(startchat);
-								Log.i(tag, "服务端接收客户端消息成功！3");
+							} else if (reces.equals("3")) {
+//								Intent startchat = new Intent(
+//										ConnActivity.this, ChatActivity.class);
+//								startchat.putExtra("ServerWifiInfo", "localhost");
+//								ConnActivity.this.startActivity(startchat);
+								Log.v(tag, "服务端接收客户端消息成功！3");
 								inputstream.close();
 								outputstream.close();
 								socket.close();
 							} else {
-								Log.i(tag, "服务端接收客户端消息失败！");
+								Log.v(tag, "服务端接收客户端消息失败！");
 							}
 						}
 
