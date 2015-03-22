@@ -11,7 +11,6 @@ import com.example.andriodmvc.R;
 import com.wifi.activity.ChatActivity;
 import com.wifi.entity.ChatMsgEntity;
 import com.wifi.util.ChatMsgViewAdapter;
-import com.wifi.util.HandleUtil;
 
 import android.app.Activity;
 import android.app.IntentService;
@@ -40,6 +39,7 @@ public class ServerService extends IntentService{
 	protected void onHandleIntent(Intent intent) {
 		port = ((Integer) intent.getExtras().get("port")).intValue();
 		//handleUtil = (HandleUtil)intent.getSerializableExtra("Handler");
+		//新建Action
 		intent = new Intent("com.wifi.broadcast"); 
 		
 		int len = 0;
@@ -53,9 +53,6 @@ public class ServerService extends IntentService{
 			Socket socket = serversocket.accept();
 			inputstream = socket.getInputStream();
 			outputstream = socket.getOutputStream();
-//            String name = getName();
-//            String date = getDate();
-//            int RId = R.layout.list_say_me_item;
             
 			while(true){
 			len = inputstream.read(rece);// 接受客户端消息
@@ -64,8 +61,8 @@ public class ServerService extends IntentService{
 				//rec = reces;
                 //服务器接收消息更新主界面
 				Log.v(TAG, "Service更新主界面");
-				//handleUtil.getHd().sendEmptyMessage(1);
 				intent.putExtra("Update", "update");
+				//发送更新界面广播
 				sendBroadcast(intent);
 				outputstream.write("close".getBytes());
 				break;

@@ -41,6 +41,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
+/*
+ * author:_phy
+ */
 public class ConnActivity extends Activity {
 
 	public final int fileRequestID = 55;
@@ -81,12 +84,12 @@ public class ConnActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
-
+        //获得系统服务
 		wifiManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
 		wifichannel = wifiManager.initialize(this, getMainLooper(), null);
 		wifiServerReceiver = new WiFiServerBroadcastReceiver(wifiManager,
 				wifichannel, this);
-
+        //注册广播过滤器
 		wifiServerReceiverIntentFilter = new IntentFilter();
 		;
 		wifiServerReceiverIntentFilter
@@ -99,7 +102,7 @@ public class ConnActivity extends Activity {
 				.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 		serverServiceIntent = null;
 		serverThreadActive = false;
-
+        //动态注册广播接收者
 		registerReceiver(wifiServerReceiver, wifiServerReceiverIntentFilter);
 		startServer();
 
@@ -112,6 +115,7 @@ public class ConnActivity extends Activity {
 		return true;
 	}
 
+	//启动服务器
 	public void startServer() {
 
 		new Thread(new Runnable() {
@@ -133,7 +137,6 @@ public class ConnActivity extends Activity {
 					// 服务器的套接字，端口为9527
 					Log.v(tag, "监听中");
 					while (true) {
-						// outputstream.write("2".getBytes());// 向客户端发送消息
 						len = inputstream.read(rece);// 接受客户端消息
 						if (len != 0) {
 							reces = new String(rece, 0, len);
@@ -145,10 +148,6 @@ public class ConnActivity extends Activity {
 								startchat.putExtra("ServerWifiInfo", "localhost");
 								ConnActivity.this.startActivity(startchat);
 							} else if (reces.equals("3")) {
-//								Intent startchat = new Intent(
-//										ConnActivity.this, ChatActivity.class);
-//								startchat.putExtra("ServerWifiInfo", "localhost");
-//								ConnActivity.this.startActivity(startchat);
 								Log.v(tag, "服务端接收客户端消息成功！3");
 								inputstream.close();
 								outputstream.close();
@@ -158,11 +157,6 @@ public class ConnActivity extends Activity {
 							}
 						}
 
-						// System.out.println(reces);
-						// BufferedReader bufferreader = new BufferedReader(
-						// new InputStreamReader(System.in));
-						// outputstream.write(("服务器....."+bufferreader.readLine()).getBytes());//
-						// 返回给客户端的欢迎信息
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -296,33 +290,17 @@ public class ConnActivity extends Activity {
 				new WifiP2pManager.ActionListener() {
 					public void onSuccess() {
 
-						// Intent startchat = new
-						// Intent(ConnActivity.this,ChatActivity.class);
-						// ConnActivity.this.startActivity(startchat);
-
-						// setClientStatus("Connection to " +
-						// targetDevice.deviceName + " sucessful");
-						// if(ServerWifiInfo!=null&&ServerDevice!=null){
-						// startClient(ServerWifiInfo, ServerDevice);
-						// }
 					}
 
 					public void onFailure(int reason) {
-						// setClientStatus("Connection to " +
-						// targetDevice.deviceName + " failed");
 
 					}
 				});
 
 	}
 
+	//启动服务端
 	public void startClient(final WifiP2pInfo wifiInfo2, WifiP2pDevice device) {
-		// if(serverSocket!=null)
-		// try{
-		// serverSocket.close();
-		// }catch(IOException e){
-		// e.printStackTrace();
-		// }
 
 		new Thread(new Runnable() {
 
@@ -423,46 +401,6 @@ public class ConnActivity extends Activity {
 		server_status_text.append(msg);
 	}
 
-	class client implements Runnable {
-		Socket s;
-
-		public client(Socket s) {
-			this.s = s;
-
-		}
-
-		@Override
-		public void run() {
-			DataOutputStream os = null;
-			DataInputStream in = null;
-			try {
-				os = new DataOutputStream(s.getOutputStream());
-				in = new DataInputStream(s.getInputStream());
-
-				if (in.readInt() == 1) {
-
-					os.writeInt(2);
-
-					Intent startchat = new Intent(ConnActivity.this,
-							ChatActivity.class);
-					ConnActivity.this.startActivity(startchat);
-
-				}
-
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			try {
-				os.close();
-				in.close();
-				s.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 
 	public void getWifiInfo(WifiP2pInfo wifiInfo2, WifiP2pDevice device) {
 

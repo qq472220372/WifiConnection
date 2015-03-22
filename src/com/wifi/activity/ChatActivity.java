@@ -30,8 +30,10 @@ import com.wifi.service.SendMessageService;
 import com.wifi.service.ServerService;
 import com.wifi.service.WiFiServerBroadcastReceiver;
 import com.wifi.util.ChatMsgViewAdapter;
-import com.wifi.util.HandleUtil;
 
+/*
+ * author:phy
+ */
 public class ChatActivity extends Activity {
     
 	private static final String TAG = ChatActivity.class.getSimpleName();;
@@ -49,7 +51,7 @@ public class ChatActivity extends Activity {
 
     public static ArrayList<ChatMsgEntity> list = new ArrayList<ChatMsgEntity>();
     
-    public Handler handler = new Handler() {
+    public Handler handler = new Handler() {    //新建句柄动态改变界面
     	@Override
     	public void handleMessage(Message msg) {
            if(msg.what == 1){
@@ -81,9 +83,11 @@ public class ChatActivity extends Activity {
         Log.v(TAG, "onCreate >>>>>>");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
+        //注册广播监听过滤器
 		wifiServerReceiverIntentFilter = new IntentFilter();
+		//添加Action
 		wifiServerReceiverIntentFilter.addAction("com.wifi.broadcast");
+		//注册广播监听器
 		registerReceiver(receiver,wifiServerReceiverIntentFilter);
 		
         server = "";
@@ -113,10 +117,6 @@ public class ChatActivity extends Activity {
                 intent1.putExtra("ip", "192.168.49.1");
                 intent1.putExtra("message", msgText);
                 startService(intent1);
-//                ChatMsgEntity newMessage = new ChatMsgEntity(name, date, msgText, RId);
-//                list.add(newMessage);
-//                talkView.setAdapter(new ChatMsgViewAdapter(ChatActivity.this, list));
-//                messageText.setText("");
                 updateView(msgText);
             }
 
@@ -132,6 +132,7 @@ public class ChatActivity extends Activity {
         
     }
     
+	//更新界面函数
     public void updateView(String msgText){
     	Log.i(TAG, "Activity更新主界面");
         String name = getName();
