@@ -11,24 +11,24 @@
     >
 <RelativeLayout
           android:orientation="horizontal"
-	      android:layout_width="fill_parent"
+	      android:layout_width="match_parent"
 	      android:layout_height="wrap_content"
+	      android:gravity="center"
 	      android:id = "@+id/MessageBox"
 	      android:layout_alignParentBottom = "true"
       >
-      <EditText
-      		android:layout_width = "200dip"
-      		android:layout_height = "50dip"
-      		android:layout_marginLeft = "50dip"
-      		android:text = "输入聊天内容"
-      		android:textSize="18dip"
-      		android:id = "@+id/MessageText"
-      />
+<Button 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text = "选择图片"
+    android:textSize="18dp"
+    android:id="@+id/ImgButton"
+    />
       <Button
       		android:layout_width = "wrap_content"
-      		android:layout_height = "50dip"
-      		android:layout_alignParentRight ="true"
-      		android:text ="发送"
+      		android:layout_height = "wrap_content"
+      		android:layout_toRightOf="@+id/ImgButton"
+      		android:text ="发送图片"
       		android:textSize="18dip"
       		android:id = "@+id/MessageButton"
       />

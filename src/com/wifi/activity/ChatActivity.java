@@ -1,5 +1,6 @@
 package com.wifi.activity;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.andriodmvc.R;
 import com.wifi.entity.ChatMsgEntity;
@@ -39,14 +41,21 @@ import com.wifi.util.ImgViewAdapter;
  * author:phy
  */
 public class ChatActivity extends Activity {
+	private int fileRequestID = 55;
     
 	private static final String TAG = ChatActivity.class.getSimpleName();;
 
     public static ListView talkView;
     
+	private String path;
+	
+	private File downloadTarget;
+    
     private String server;
 
     private Button messageButton;
+    
+    private Button imgButton;
 
     public static EditText messageText;
     
@@ -102,12 +111,17 @@ public class ChatActivity extends Activity {
         server = intent.getStringExtra("ServerWifiInfo");
         talkView = (ListView) findViewById(R.id.list);
         messageButton = (Button) findViewById(R.id.MessageButton);
-        messageText = (EditText) findViewById(R.id.MessageText);
+        imgButton = (Button) findViewById(R.id.ImgButton);
+        //messageText = (EditText) findViewById(R.id.MessageText);
+        messageButton.setVisibility(View.INVISIBLE);
         messageButton.setClickable(false);
+        imgButton.setVisibility(View.INVISIBLE);
         
         Log.v(TAG, "ServerIP:"+server);
         
         if(!server.equals("localhost")){
+        	messageButton.setVisibility(View.VISIBLE);
+        	imgButton.setVisibility(View.VISIBLE);
         OnClickListener messageButtonListener = new OnClickListener() {
 
             @Override
@@ -118,17 +132,34 @@ public class ChatActivity extends Activity {
                 String date = getDate();
                 String msgText = getText();
                 int RId = R.layout.list_say_me_item;
+                messageButton.setClickable(true);
 
+                if(downloadTarget!=null){
                 Intent intent1 = new Intent(ChatActivity.this,SendMessageService.class);
                 intent1.putExtra("port", 8888);
                 intent1.putExtra("ip", "192.168.49.1");
+                intent1.putExtra("file", downloadTarget);
                 intent1.putExtra("message", msgText);
                 startService(intent1);
                 updateView(msgText);
+                }
+                else{
+                	
+                }
             }
 
         };
         messageButton.setOnClickListener(messageButtonListener);
+        
+        OnClickListener imgButtonListener = new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+		        Intent clientStartIntent = new Intent(ChatActivity.this, FileBrowser.class);
+		        startActivityForResult(clientStartIntent, fileRequestID);  
+				
+			}
+		};
         }
         else {
         	Intent intent2 = new Intent(ChatActivity.this,ServerService.class);
@@ -139,6 +170,36 @@ public class ChatActivity extends Activity {
         
     }
     
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK && requestCode == fileRequestID) {
+    		//Fetch result
+    		File targetDir = (File) data.getExtras().get("file");
+    		
+    		if(targetDir.isDirectory())
+    		{
+    			if(targetDir.canWrite())
+    			{
+    				downloadTarget = targetDir;
+	    	    	//TextView filePath = (TextView) findViewById(R.id.server_file_path);
+	    	    	//filePath.setText(targetDir.getPath());
+	    			//setServerFileTransferStatus("Download directory set to " + targetDir.getName());
+	    			
+    			}
+    			else
+    			{
+	    			//setServerFileTransferStatus("You do not have permission to write to " + targetDir.getName());
+    			}
+
+    		}
+    		else
+    		{
+    			//setServerFileTransferStatus("The selected file is not a directory. Please select a valid download directory.");
+    		}
+
+        }
+	}
+	
 	//更新界面函数
     public void updateView(String msgText){
     	Log.i(TAG, "Activity更新主界面");

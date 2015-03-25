@@ -1,5 +1,6 @@
 package com.wifi.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -22,6 +23,7 @@ public class SendMessageService extends IntentService{
 	int port;
 	String ip;
 	String message;
+	File file;
 	Socket socket;
 
 	public SendMessageService() {
@@ -33,6 +35,7 @@ public class SendMessageService extends IntentService{
 		ip = intent.getStringExtra("ip");
 		port = ((Integer) intent.getExtras().get("port")).intValue();
 		message = intent.getExtras().getString("message");
+		file = (File)intent.getExtras().get("file");
 		
 			int len = 0;
 			OutputStream outputstream = null;
