@@ -1,6 +1,7 @@
 
 package com.wifi.entity;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 public class ImgEntity {
@@ -10,15 +11,17 @@ public class ImgEntity {
 
     private String date;
 
-    private Image img;
+    private Bitmap img;
 
     private int layoutID;
 
-    public Image getImg() {
+
+
+	public Bitmap getImg() {
 		return img;
 	}
 
-	public void setImg(Image img) {
+	public void setImg(Bitmap img) {
 		this.img = img;
 	}
 
@@ -49,7 +52,7 @@ public class ImgEntity {
     public ImgEntity() {
     }
 
-    public ImgEntity(String name, String date, Image img, int layoutID) {
+    public ImgEntity(String name, String date, Bitmap img, int layoutID) {
         super();
         this.name = name;
         this.date = date;

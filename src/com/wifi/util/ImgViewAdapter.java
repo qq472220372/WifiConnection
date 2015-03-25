@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,19 +29,19 @@ public class ImgViewAdapter extends BaseAdapter{
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return imglist.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return null;
+		return imglist.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 	@Override
@@ -58,6 +59,9 @@ public class ImgViewAdapter extends BaseAdapter{
 
         TextView tvDate = (TextView) layout.findViewById(R.id.messagedetail_row_date1);
         tvDate.setText(imgentity.getDate());
+        
+        ImageView imageView = (ImageView) layout.findViewById(R.id.img_rec);
+        imageView.setImageBitmap(imgentity.getImg());
 
         return layout;
 	}

@@ -1,5 +1,8 @@
 package com.wifi.service;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -52,22 +55,48 @@ public class ServerService extends IntentService{
 			serversocket = new ServerSocket(port);
 			Socket socket = serversocket.accept();
 			inputstream = socket.getInputStream();
-			outputstream = socket.getOutputStream();
+//			outputstream = socket.getOutputStream();
             
-			while(true){
-			len = inputstream.read(rece);// 接受客户端消息
-			if (len != 0) {
-				//reces = new String(rece, 0, len);
-				//rec = reces;
-                //服务器接收消息更新主界面
-				Log.v(TAG, "Service更新主界面");
-				intent.putExtra("Update", "update");
-				//发送更新界面广播
-				sendBroadcast(intent);
-				outputstream.write("close".getBytes());
-				break;
-			}
-		}
+//			while(true){
+//			len = inputstream.read(rece);// 接受客户端消息
+//			if (len != 0) {
+//				//reces = new String(rece, 0, len);
+//				//rec = reces;
+//                //服务器接收消息更新主界面
+//				Log.v(TAG, "Service更新主界面");
+//				intent.putExtra("Update", "update");
+//				//发送更新界面广播
+//				sendBroadcast(intent);
+//				outputstream.write("close".getBytes());
+//				break;
+//			}
+//		}
+			
+			String savedAs = "WDFL_File_" + System.currentTimeMillis();
+		    File file = new File("./sdcard", savedAs);
+			
+		    byte[] buffer = new byte[4096];
+		    int bytesRead;
+		    
+		    FileOutputStream fos = new FileOutputStream(file);
+		    BufferedOutputStream bos = new BufferedOutputStream(fos);
+		    
+		    while(true)
+		    {
+			    bytesRead = inputstream.read(buffer, 0, buffer.length);
+			    if(bytesRead == -1)
+			    {
+					Log.v(TAG, "Service更新主界面");
+					intent.putExtra("Update", "update");
+					//发送更新界面广播
+					sendBroadcast(intent);
+			    	break;
+			    }			    
+			    bos.write(buffer, 0, bytesRead);
+			    bos.flush();
+
+		    }
+		    
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

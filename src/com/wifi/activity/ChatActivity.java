@@ -15,6 +15,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andriodmvc.R;
 import com.wifi.entity.ChatMsgEntity;
@@ -49,7 +52,7 @@ public class ChatActivity extends Activity {
     
 	private String path;
 	
-	private File downloadTarget;
+	private File fileToSend;
     
     private String server;
 
@@ -130,18 +133,19 @@ public class ChatActivity extends Activity {
                 Log.v(TAG, "onclick >>>>>>>>");
                 String name = getName();
                 String date = getDate();
-                String msgText = getText();
+                //String msgText = getText();
                 int RId = R.layout.list_say_me_item;
                 messageButton.setClickable(true);
 
-                if(downloadTarget!=null){
+                if(fileToSend!=null){
                 Intent intent1 = new Intent(ChatActivity.this,SendMessageService.class);
                 intent1.putExtra("port", 8888);
                 intent1.putExtra("ip", "192.168.49.1");
-                intent1.putExtra("file", downloadTarget);
-                intent1.putExtra("message", msgText);
+                intent1.putExtra("file", fileToSend);
+                //intent1.putExtra("message", msgText);
                 startService(intent1);
-                updateView(msgText);
+                //updateView(msgText);
+                updateImg();
                 }
                 else{
                 	
@@ -160,6 +164,7 @@ public class ChatActivity extends Activity {
 				
 			}
 		};
+		imgButton.setOnClickListener(imgButtonListener);
         }
         else {
         	Intent intent2 = new Intent(ChatActivity.this,ServerService.class);
@@ -175,29 +180,33 @@ public class ChatActivity extends Activity {
 		if (resultCode == Activity.RESULT_OK && requestCode == fileRequestID) {
     		//Fetch result
     		File targetDir = (File) data.getExtras().get("file");
-    		
-    		if(targetDir.isDirectory())
-    		{
-    			if(targetDir.canWrite())
-    			{
-    				downloadTarget = targetDir;
-	    	    	//TextView filePath = (TextView) findViewById(R.id.server_file_path);
-	    	    	//filePath.setText(targetDir.getPath());
-	    			//setServerFileTransferStatus("Download directory set to " + targetDir.getName());
-	    			
-    			}
-    			else
-    			{
-	    			//setServerFileTransferStatus("You do not have permission to write to " + targetDir.getName());
-    			}
+        		
+        		if(targetDir.isFile())
+        		{
+        			if(targetDir.canRead())
+        			{
+        				fileToSend = targetDir;
+        				//filePathProvided = true;
+        				
+        				//setTargetFileStatus(targetDir.getName() + " selected for file transfer");
+        				Log.i(TAG, targetDir.getName() + " selected for file transfer");	    			
+        			}
+        			else
+        			{
+        				//filePathProvided = false;
+        				//setTargetFileStatus("You do not have permission to read the file " + targetDir.getName());
+        				Log.i(TAG, "You do not have permission to read the file " + targetDir.getName());
+        			}
 
-    		}
-    		else
-    		{
-    			//setServerFileTransferStatus("The selected file is not a directory. Please select a valid download directory.");
-    		}
+        		}
+        		else
+        		{
+    				//filePathProvided = false;
+        			//setTargetFileStatus("You may not transfer a directory, please select a single file");
+        			Log.i(TAG, "You may not transfer a directory, please select a single file");
+        		}
 
-        }
+            }
 	}
 	
 	//更新界面函数
@@ -217,11 +226,12 @@ public class ChatActivity extends Activity {
     	Log.i(TAG, "更新图片信息");
     	String name = getName();
     	String date = getDate();
+    	Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.download);
     	int RId = R.layout.list_img_layout;
-    	ImgEntity imgEntity = new ImgEntity(name,date,null,RId);
+    	ImgEntity imgEntity = new ImgEntity(name,date,img,RId);
     	imgList.add(imgEntity);
     	talkView.setAdapter(new ImgViewAdapter(ChatActivity.this, imgList));
-    	messageText.setText("");
+    	//messageText.setText("");
     	
      }
     // shuold be redefine in the future
