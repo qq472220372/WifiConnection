@@ -97,6 +97,9 @@ public class ServerService extends IntentService{
 
 		    }
 		    
+		    bos.close();
+		    socket.close();
+		    
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

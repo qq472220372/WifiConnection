@@ -85,6 +85,7 @@ public class SendMessageService extends IntentService{
 			    fis.close();
 			    bis.close();
 			    outputstream.close();
+			    socket.close();
 			    
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
