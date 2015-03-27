@@ -103,10 +103,6 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
         displayRatio_selelct(currentPage);
         
         
-//        MyScrollView myScrollView = (MyScrollView) findViewById(R.id.viewflipper_scrollview);
-//        myScrollView.setOnTouchListener(onTouchListener);
-//        myScrollView.setGestureDetector(mGestureDetector);
-        
         thread.start();
     }
     private OnClickListener clickListener = new OnClickListener() {
