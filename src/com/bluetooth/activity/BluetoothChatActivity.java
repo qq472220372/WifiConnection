@@ -1,6 +1,6 @@
 package com.bluetooth.activity;
 
-import com.blutooth.service.BluetoothChatService;
+import com.bluetooth.service.BluetoothChatService;
 import com.example.andriodmvc.R;
 import com.main.activity.TestUIActivity;
 

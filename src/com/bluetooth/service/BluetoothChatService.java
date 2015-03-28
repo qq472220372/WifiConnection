@@ -1,4 +1,4 @@
-package com.blutooth.service;
+package com.bluetooth.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -236,7 +236,7 @@ public class BluetoothChatService{
         }
 
         public void run() {
-            Log.i(TAG, "开始mConnectThread");
+            Log.i(TAG, "�?始mConnectThread");
             setName("ConnectThread");
 
             mAdapter.cancelDiscovery();

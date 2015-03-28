@@ -1,4 +1,4 @@
-package com.blutooth.service;
+package com.bluetooth.service;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
