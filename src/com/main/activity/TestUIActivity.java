@@ -1,9 +1,11 @@
-package com.wifi.activity;
+package com.main.activity;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import com.bluetooth.activity.BluetoothChatActivity;
 import com.example.andriodmvc.R;
+import com.example.android.wifidirect.WiFiDirectActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -75,6 +77,8 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				Intent intent = new Intent(TestUIActivity.this,MainLogon.class);
+				startActivity(intent);
 				toastInfo("µÇÂ¼°´Å¥");
 			}
 		});
@@ -308,7 +312,16 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 	}
 	
 	public void startWifiDirect(View view){
-		Intent intent = new Intent(TestUIActivity.this,ConnActivity.class);
+//		Intent intent = new Intent(TestUIActivity.this,ConnActivity.class);
+//		startActivity(intent);
+		
+		Intent intent = new Intent(TestUIActivity.this,WiFiDirectActivity.class);
 		startActivity(intent);
+	}
+	
+	public void startBluetooth(View view){
+		Intent intent = new Intent();
+		intent.setClass(TestUIActivity.this, BluetoothChatActivity.class);
+		startActivity(intent);	
 	}
 }

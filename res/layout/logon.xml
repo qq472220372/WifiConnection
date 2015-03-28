@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yangting.QuickKey.MainLogon"
+    tools:ignore="MergeRootFrame">
+    <TextView
+        android:id="@+id/txtname"
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="用户名："
+		android:layout_margin="15dp"
+		android:textColor="#EF6D00"
+		android:textSize="20sp"/>
+	<EditText
+		android:id="@+id/editName"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="15dp"
+		android:layout_alignBaseline="@id/txtname"
+		android:layout_toRightOf="@id/txtname"/>
+	<TextView
+	    android:id="@+id/txtpass"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="15dp"
+		android:text="密码："
+		android:textColor="#EF6D00"
+		android:layout_below="@id/txtname"
+		android:textSize="20sp"/>
+	<EditText
+		android:id="@+id/editPass"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="15dp"
+		android:layout_alignLeft="@id/editName"
+		android:layout_alignBaseline="@id/txtpass"
+		android:password="true"/>
+	 <CheckBox
+        android:id="@+id/savepassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtpass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="记住密码" />
+
+	<Button
+	    android:id="@+id/btnLogon"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/savepassword"
+	    android:layout_margin="30dp"
+	    android:textSize="20sp"
+	    android:text="登陆" />
+	<Button
+	    android:id="@+id/btnreg"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentRight="true"
+	    android:layout_margin="15dp"
+	    android:background="#ffffff"
+	    android:textColor="#0000ff"
+	    android:textSize="15sp"
+	    android:text="注册" />
+	
+</RelativeLayout>
+

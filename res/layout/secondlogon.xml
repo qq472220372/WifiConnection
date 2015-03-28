@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fffbbb"
+    tools:context="com.yangting.QuickKey.MainLogon"
+    tools:ignore="MergeRootFrame">
+      
+     <ImageView
+         android:id="@+id/contacts"
+         android:layout_width="60dp"
+         android:layout_height="60dp"
+         android:layout_marginTop="20dp"
+         android:scaleType="fitCenter"
+         android:src="@drawable/people" />
+     <Button
+        android:id="@+id/btnContacts"
+        android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:layout_marginTop="20dp"
+		android:text="紧急呼救"
+		android:background="#fffbbb"	
+		android:gravity="center_vertical"	
+		android:layout_toRightOf="@id/contacts"
+		android:textSize="20sp"/>
+     
+      <ImageView
+         android:id="@+id/sharepictures"
+         android:layout_width="60dp"
+         android:layout_height="60dp"
+         android:layout_below="@id/contacts"
+         android:layout_toLeftOf="@+id/TxtContacts"
+         android:scaleType="fitCenter"
+         android:src="@drawable/sharepicture" />
+     <Button
+        android:id="@+id/btnSharePictures"
+        android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:text="快传图片"		
+		android:background="#fffbbb"
+		android:gravity="center_vertical"
+		android:layout_toRightOf="@id/sharepictures"
+		android:layout_below="@id/btnContacts"
+		android:textSize="20sp"/>
+     
+     <ImageView
+        android:id="@+id/location"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/sharepictures"
+        android:scaleType="fitCenter"
+        android:src="@drawable/location" />
+     <Button
+        android:id="@+id/btnLocation"
+        android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:text="人员定位"
+		android:background="#fffbbb"
+		android:gravity="center_vertical"
+		android:layout_toRightOf="@id/location"
+		android:layout_below="@id/btnSharePictures"
+		android:textSize="20sp"/>
+
+</RelativeLayout>
+

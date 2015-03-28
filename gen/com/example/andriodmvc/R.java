@@ -10,6 +10,10 @@ package com.example.andriodmvc;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int layout_border_color=0x7f040001;
+        public static final int status_bar_color=0x7f040000;
+    }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
@@ -17,8 +21,10 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
+        public static final int phone_list_height=0x7f050003;
+        public static final int tablet_list_width=0x7f050002;
     }
     public static final class drawable {
         public static final int background1=0x7f020000;
@@ -46,133 +52,237 @@ public final class R {
         public static final int default_pic_2=0x7f020016;
         public static final int default_pic_3=0x7f020017;
         public static final int default_pic_4=0x7f020018;
-        public static final int download=0x7f020019;
-        public static final int home_bottom_style=0x7f02001a;
-        public static final int home_img_ratio=0x7f02001b;
-        public static final int home_img_ratio_selected=0x7f02001c;
-        public static final int home_index_arrow=0x7f02001d;
-        public static final int home_index_btn=0x7f02001e;
-        public static final int home_index_btn_d=0x7f02001f;
-        public static final int home_regist_bn_style=0x7f020020;
-        public static final int home_select_list_style=0x7f020021;
-        public static final int home_user_login_bn_style=0x7f020022;
-        public static final int ic_launcher=0x7f020023;
-        public static final int icon=0x7f020024;
-        public static final int incoming=0x7f020025;
-        public static final int index_browse=0x7f020026;
-        public static final int index_looks=0x7f020027;
-        public static final int index_search=0x7f020028;
-        public static final int index_shopping=0x7f020029;
-        public static final int index_show=0x7f02002a;
-        public static final int login_btn=0x7f02002b;
-        public static final int login_btn_d=0x7f02002c;
-        public static final int outgoing=0x7f02002d;
-        public static final int ratio_img_style=0x7f02002e;
-        public static final int register_btn=0x7f02002f;
-        public static final int register_btn_d=0x7f020030;
-        public static final int retouxiang=0x7f020031;
-        public static final int searchbg1=0x7f020032;
-        public static final int searchbg2=0x7f020033;
-        public static final int set_bn_style=0x7f020034;
-        public static final int title_home=0x7f020035;
-        public static final int top_bar_bg=0x7f020036;
-        public static final int top_bar_logo=0x7f020037;
-        public static final int top_bar_set_btn=0x7f020038;
-        public static final int top_bar_set_btn_d=0x7f020039;
+        public static final int details_view=0x7f020019;
+        public static final int download=0x7f02001a;
+        public static final int home_bottom_style=0x7f02001b;
+        public static final int home_img_ratio=0x7f02001c;
+        public static final int home_img_ratio_selected=0x7f02001d;
+        public static final int home_index_arrow=0x7f02001e;
+        public static final int home_index_btn=0x7f02001f;
+        public static final int home_index_btn_d=0x7f020020;
+        public static final int home_regist_bn_style=0x7f020021;
+        public static final int home_select_list_style=0x7f020022;
+        public static final int home_user_login_bn_style=0x7f020023;
+        public static final int ic_action_discover=0x7f020024;
+        public static final int ic_action_on_off=0x7f020025;
+        public static final int ic_launcher=0x7f020026;
+        public static final int icon=0x7f020027;
+        public static final int incoming=0x7f020028;
+        public static final int index_browse=0x7f020029;
+        public static final int index_looks=0x7f02002a;
+        public static final int index_search=0x7f02002b;
+        public static final int index_shopping=0x7f02002c;
+        public static final int index_show=0x7f02002d;
+        public static final int location=0x7f02002e;
+        public static final int login_btn=0x7f02002f;
+        public static final int login_btn_d=0x7f020030;
+        public static final int machine=0x7f020031;
+        public static final int outgoing=0x7f020032;
+        public static final int people=0x7f020033;
+        public static final int quickey=0x7f020034;
+        public static final int ratio_img_style=0x7f020035;
+        public static final int register_btn=0x7f020036;
+        public static final int register_btn_d=0x7f020037;
+        public static final int retouxiang=0x7f020038;
+        public static final int searchbg1=0x7f020039;
+        public static final int searchbg2=0x7f02003a;
+        public static final int section_header=0x7f02003b;
+        public static final int set_bn_style=0x7f02003c;
+        public static final int sharepicture=0x7f02003d;
+        public static final int title_home=0x7f02003e;
+        public static final int top_bar_bg=0x7f02003f;
+        public static final int top_bar_logo=0x7f020040;
+        public static final int top_bar_set_btn=0x7f020041;
+        public static final int top_bar_set_btn_d=0x7f020042;
     }
     public static final class id {
-        public static final int ImgButton=0x7f080023;
-        public static final int MessageBox=0x7f080002;
-        public static final int MessageButton=0x7f080024;
-        public static final int action_settings=0x7f08002b;
-        public static final int current_path=0x7f080000;
-        public static final int device_list=0x7f080005;
-        public static final int file_browser_listview=0x7f080001;
-        public static final int home_bn_login=0x7f080015;
-        public static final int home_bn_regist=0x7f080014;
-        public static final int home_date_ratio_ly=0x7f080029;
-        public static final int home_date_tv=0x7f080007;
-        public static final int home_img_browse=0x7f080010;
-        public static final int home_img_looks=0x7f08000c;
-        public static final int home_img_search=0x7f08000f;
-        public static final int home_img_shopping=0x7f08000d;
-        public static final int home_img_show=0x7f08000e;
-        public static final int home_ratio_img_01=0x7f080008;
-        public static final int home_ratio_img_02=0x7f080009;
-        public static final int home_ratio_img_03=0x7f08000a;
-        public static final int home_ratio_img_04=0x7f08000b;
-        public static final int home_user_layout_ly=0x7f08002a;
-        public static final int img_rec=0x7f080018;
-        public static final int img_rec2=0x7f08001e;
-        public static final int list=0x7f080025;
-        public static final int mViewFliper_vf=0x7f080028;
-        public static final int messagedetail_row_date=0x7f080021;
-        public static final int messagedetail_row_date1=0x7f080017;
-        public static final int messagedetail_row_date2=0x7f08001d;
-        public static final int messagedetail_row_name=0x7f080020;
-        public static final int messagedetail_row_name1=0x7f080016;
-        public static final int messagedetail_row_name2=0x7f08001c;
-        public static final int messagedetail_row_text=0x7f080022;
-        public static final int messagegedetail_rov_icon=0x7f08001f;
-        public static final int messagegedetail_rov_icon1=0x7f08001a;
-        public static final int messagegedetail_rov_icon2=0x7f08001b;
-        public static final int progressBar=0x7f080019;
-        public static final int search_button=0x7f080006;
-        public static final int search_status=0x7f080004;
-        public static final int titile_layout_ry=0x7f080011;
-        public static final int title1=0x7f080003;
-        public static final int title_logo_img=0x7f080012;
-        public static final int title_ry=0x7f080026;
-        public static final int title_set_bn=0x7f080013;
-        public static final int viewflipper_scrollview=0x7f080027;
+        public static final int ImgButton=0x7f090042;
+        public static final int MessageBox=0x7f090002;
+        public static final int MessageButton=0x7f090043;
+        public static final int MessageEdit=0x7f090008;
+        public static final int PhoneEdit=0x7f090007;
+        public static final int TxtContacts=0x7f09004f;
+        public static final int action_settings=0x7f090058;
+        public static final int atn_direct_discover=0x7f090057;
+        public static final int atn_direct_enable=0x7f090056;
+        public static final int btnContacts=0x7f09004d;
+        public static final int btnLocation=0x7f090052;
+        public static final int btnLogon=0x7f090040;
+        public static final int btnSharePictures=0x7f090050;
+        public static final int btn_connect=0x7f09000d;
+        public static final int btn_disconnect=0x7f09000e;
+        public static final int btn_start_client=0x7f09000f;
+        public static final int btnphone=0x7f09000a;
+        public static final int btnreg=0x7f090041;
+        public static final int btnsave=0x7f090009;
+        public static final int button_scan=0x7f09001a;
+        public static final int contacts=0x7f09004c;
+        public static final int container=0x7f09003a;
+        public static final int current_path=0x7f090000;
+        public static final int device_address=0x7f090010;
+        public static final int device_details=0x7f09004b;
+        public static final int device_info=0x7f090011;
+        public static final int device_list=0x7f090005;
+        public static final int device_name=0x7f09004a;
+        public static final int discoverable=0x7f09005a;
+        public static final int editName=0x7f09003c;
+        public static final int editPass=0x7f09003e;
+        public static final int file_browser_listview=0x7f090001;
+        public static final int frag_detail=0x7f090055;
+        public static final int frag_list=0x7f090054;
+        public static final int group_ip=0x7f090013;
+        public static final int group_owner=0x7f090012;
+        public static final int home_bn_login=0x7f09002c;
+        public static final int home_bn_regist=0x7f09002b;
+        public static final int home_date_ratio_ly=0x7f090048;
+        public static final int home_date_tv=0x7f09001e;
+        public static final int home_img_browse=0x7f090027;
+        public static final int home_img_looks=0x7f090023;
+        public static final int home_img_search=0x7f090026;
+        public static final int home_img_shopping=0x7f090024;
+        public static final int home_img_show=0x7f090025;
+        public static final int home_ratio_img_01=0x7f09001f;
+        public static final int home_ratio_img_02=0x7f090020;
+        public static final int home_ratio_img_03=0x7f090021;
+        public static final int home_ratio_img_04=0x7f090022;
+        public static final int home_user_layout_ly=0x7f090049;
+        public static final int icon=0x7f09001b;
+        public static final int img_rec=0x7f09002f;
+        public static final int img_rec2=0x7f090035;
+        public static final int linearLayout1=0x7f090053;
+        public static final int list=0x7f090044;
+        public static final int location=0x7f090051;
+        public static final int mViewFliper_vf=0x7f090047;
+        public static final int messagedetail_row_date=0x7f090038;
+        public static final int messagedetail_row_date1=0x7f09002e;
+        public static final int messagedetail_row_date2=0x7f090034;
+        public static final int messagedetail_row_name=0x7f090037;
+        public static final int messagedetail_row_name1=0x7f09002d;
+        public static final int messagedetail_row_name2=0x7f090033;
+        public static final int messagedetail_row_text=0x7f090039;
+        public static final int messagegedetail_rov_icon=0x7f090036;
+        public static final int messagegedetail_rov_icon1=0x7f090031;
+        public static final int messagegedetail_rov_icon2=0x7f090032;
+        public static final int my_name=0x7f09001c;
+        public static final int my_status=0x7f09001d;
+        public static final int new_devices=0x7f090019;
+        public static final int paired_devices=0x7f090017;
+        public static final int progressBar=0x7f090030;
+        public static final int savepassword=0x7f09003f;
+        public static final int scan=0x7f090059;
+        public static final int search_button=0x7f090006;
+        public static final int search_status=0x7f090004;
+        public static final int sharepictures=0x7f09004e;
+        public static final int status_bar=0x7f090014;
+        public static final int status_text=0x7f090015;
+        public static final int titile_layout_ry=0x7f090028;
+        public static final int title1=0x7f090003;
+        public static final int title_left_text=0x7f09000b;
+        public static final int title_logo_img=0x7f090029;
+        public static final int title_new_devices=0x7f090018;
+        public static final int title_paired_devices=0x7f090016;
+        public static final int title_right_text=0x7f09000c;
+        public static final int title_ry=0x7f090045;
+        public static final int title_set_bn=0x7f09002a;
+        public static final int txtname=0x7f09003b;
+        public static final int txtpass=0x7f09003d;
+        public static final int viewflipper_scrollview=0x7f090046;
     }
     public static final class layout {
         public static final int activity_file_browser=0x7f030000;
         public static final int activity_search=0x7f030001;
-        public static final int home_data_bar=0x7f030002;
-        public static final int home_ratio_img=0x7f030003;
-        public static final int home_select_list_layout=0x7f030004;
-        public static final int home_title_layout=0x7f030005;
-        public static final int home_user_layout=0x7f030006;
-        public static final int list_img_layout=0x7f030007;
-        public static final int list_img_layout_income=0x7f030008;
-        public static final int list_say_he_item=0x7f030009;
-        public static final int list_say_me_item=0x7f03000a;
-        public static final int main=0x7f03000b;
-        public static final int main_menu=0x7f03000c;
+        public static final int bluetooth_main=0x7f030002;
+        public static final int custom_title=0x7f030003;
+        public static final int device_detail=0x7f030004;
+        public static final int device_list=0x7f030005;
+        public static final int device_list1=0x7f030006;
+        public static final int device_name=0x7f030007;
+        public static final int home_data_bar=0x7f030008;
+        public static final int home_ratio_img=0x7f030009;
+        public static final int home_select_list_layout=0x7f03000a;
+        public static final int home_title_layout=0x7f03000b;
+        public static final int home_user_layout=0x7f03000c;
+        public static final int list_img_layout=0x7f03000d;
+        public static final int list_img_layout_income=0x7f03000e;
+        public static final int list_say_he_item=0x7f03000f;
+        public static final int list_say_me_item=0x7f030010;
+        public static final int logon=0x7f030011;
+        public static final int main=0x7f030012;
+        public static final int main_menu=0x7f030013;
+        public static final int row_devices=0x7f030014;
+        public static final int secondlogon=0x7f030015;
+        public static final int wifi_main=0x7f030016;
     }
     public static final class menu {
-        public static final int conn=0x7f070000;
-        public static final int main=0x7f070001;
-        public static final int search=0x7f070002;
+        public static final int action_items=0x7f080000;
+        public static final int conn=0x7f080001;
+        public static final int main=0x7f080002;
+        public static final int option_menu=0x7f080003;
+        public static final int search=0x7f080004;
     }
     public static final class string {
-        public static final int action_settings=0x7f050001;
-        public static final int app_name=0x7f050000;
-        public static final int file_browser_title=0x7f050009;
-        public static final int hello=0x7f050003;
-        public static final int hello_world=0x7f050007;
-        public static final int home_tv=0x7f05000a;
-        public static final int index_browse_info_tv=0x7f050019;
-        public static final int index_browse_tv=0x7f050018;
-        public static final int index_looks_info_tv=0x7f050011;
-        public static final int index_looks_tv=0x7f050010;
-        public static final int index_search_info_tv=0x7f050017;
-        public static final int index_search_tv=0x7f050016;
-        public static final int index_shopping_info_tv=0x7f050013;
-        public static final int index_shopping_tv=0x7f050012;
-        public static final int index_show_info_tv=0x7f050015;
-        public static final int index_show_tv=0x7f050014;
-        public static final int login_tv=0x7f05000e;
-        public static final int myDisplayName=0x7f050004;
-        public static final int regist_tv=0x7f05000f;
-        public static final int search_title=0x7f050002;
-        public static final int select_dir=0x7f050008;
-        public static final int shopping_tv=0x7f05000c;
-        public static final int show_tv=0x7f05000d;
-        public static final int style_tv=0x7f05000b;
-        public static final int title_activity_conn=0x7f050006;
-        public static final int title_activity_search=0x7f050005;
+        public static final int action_settings=0x7f060001;
+        public static final int app_name=0x7f060000;
+        public static final int bt_not_enabled_leaving=0x7f06001d;
+        public static final int button_scan=0x7f060027;
+        public static final int clear=0x7f06001b;
+        public static final int client_text=0x7f060032;
+        /**  Menu 
+         */
+        public static final int connect=0x7f060028;
+        public static final int connect_peer_button=0x7f06002c;
+        public static final int disconnect_peer_button=0x7f06002d;
+        public static final int discover_peers_button=0x7f06002b;
+        public static final int discoverable=0x7f060029;
+        public static final int empty=0x7f06002f;
+        public static final int empty_message=0x7f060033;
+        public static final int enable_p2p_button=0x7f06002a;
+        public static final int file_browser_title=0x7f060009;
+        public static final int get_file_button=0x7f06002e;
+        public static final int group_owner_text=0x7f060035;
+        public static final int hello=0x7f060003;
+        public static final int hello_world=0x7f060007;
+        public static final int home_tv=0x7f06000a;
+        public static final int index_browse_info_tv=0x7f060019;
+        public static final int index_browse_tv=0x7f060018;
+        public static final int index_looks_info_tv=0x7f060011;
+        public static final int index_looks_tv=0x7f060010;
+        public static final int index_search_info_tv=0x7f060017;
+        public static final int index_search_tv=0x7f060016;
+        public static final int index_shopping_info_tv=0x7f060013;
+        public static final int index_shopping_tv=0x7f060012;
+        public static final int index_show_info_tv=0x7f060015;
+        public static final int index_show_tv=0x7f060014;
+        public static final int label_me=0x7f060036;
+        public static final int label_peers=0x7f060037;
+        public static final int login_tv=0x7f06000e;
+        public static final int myDisplayName=0x7f060004;
+        public static final int no=0x7f060031;
+        public static final int none_found=0x7f060024;
+        public static final int none_paired=0x7f060023;
+        public static final int not_connected=0x7f06001c;
+        public static final int p2p_off_warning=0x7f060034;
+        public static final int regist_tv=0x7f06000f;
+        /**   DeviceListActivity 
+         */
+        public static final int scanning=0x7f060021;
+        public static final int search_title=0x7f060002;
+        public static final int select_device=0x7f060022;
+        public static final int select_dir=0x7f060008;
+        /**   BluetoothChatActivity 
+         */
+        public static final int send=0x7f06001a;
+        public static final int shopping_tv=0x7f06000c;
+        public static final int show_tv=0x7f06000d;
+        public static final int style_tv=0x7f06000b;
+        public static final int title_activity_conn=0x7f060006;
+        public static final int title_activity_search=0x7f060005;
+        public static final int title_connected_to=0x7f06001f;
+        public static final int title_connecting=0x7f06001e;
+        public static final int title_not_connected=0x7f060020;
+        public static final int title_other_devices=0x7f060026;
+        public static final int title_paired_devices=0x7f060025;
+        public static final int yes=0x7f060030;
     }
     public static final class style {
         /** 
@@ -196,10 +306,9 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
     }
 }

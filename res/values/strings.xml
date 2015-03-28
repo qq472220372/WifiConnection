@@ -19,7 +19,7 @@
     <string name="login_tv">登录</string>
     <string name="regist_tv">注册</string>
     <string name="index_looks_tv">紧急呼叫/SOS</string>
-    <string name="index_looks_info_tv">遇到危险经济呼叫</string>
+    <string name="index_looks_info_tv">遇到危险紧急呼叫</string>
     <string name="index_shopping_tv">人员定位/LOCATION</string>
     <string name="index_shopping_info_tv">看看大家都在哪里</string>
     <string name="index_show_tv">快传照片/PICTURE</string>
@@ -28,4 +28,41 @@
     <string name="index_search_info_tv">找找好玩的地方</string>
     <string name="index_browse_tv">更多信息/BROWSER</string>
     <string name="index_browse_info_tv">了解我们的软件</string>
+    
+        <!--  BluetoothChatActivity -->
+    <string name="send">发送</string>
+    <string name="clear">清空</string>
+    <string name="not_connected">未连接设备</string>
+    <string name="bt_not_enabled_leaving">蓝牙未启用</string>
+    <string name="title_connecting">连接中...</string>
+    <string name="title_connected_to">已经连接: </string>
+    <string name="title_not_connected">未连接</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">扫描设备...</string>
+    <string name="select_device">选择一个设备连接</string>
+    <string name="none_paired">没有配对的设备</string>
+    <string name="none_found">没有发现设备</string>
+    <string name="title_paired_devices">配对的设备</string>
+    <string name="title_other_devices">其他可用的设备</string>
+    <string name="button_scan">扫描设备</string>
+
+    <!-- Menu -->
+    <string name="connect">连接设备</string>
+    <string name="discoverable">允许发现</string>
+    
+    <string name="enable_p2p_button">Wifi直连  On/Off</string>
+    <string name="discover_peers_button">搜索设备</string>
+    <string name="connect_peer_button">连接</string>
+    <string name="disconnect_peer_button">断开</string>
+    <string name="get_file_button">选择照片</string>
+    <string name="empty"></string>
+    <string name="yes">好</string>
+    <string name="no">不</string>
+    <string name="client_text">这个设备将作为发送者，请选择照片发送给接收者</string>
+    <string name="empty_message">未找到设备，请确定在菜单栏中打开了Wifi-Direct直连功能</string>
+    <string name="p2p_off_warning">Enable P2P from action bar button above or system settings</string>
+    <string name="group_owner_text">"我是小型局域网拥有者? "</string>
+    <string name="label_me">我</string>
+    <string name="label_peers">设备</string>
 </resources>
