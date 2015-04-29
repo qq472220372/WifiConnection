@@ -38,6 +38,7 @@ import android.widget.TextView;
 
 import com.example.andriodmvc.R;
 import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
+import com.wifi.imgchooser.imageloader.MainActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -109,9 +110,12 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                     public void onClick(View v) {
                         // Allow user to pick an image from Gallery or other
                         // registered apps
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");
-                        startActivityForResult(intent, CHOOSE_FILE_RESULT_CODE);
+//                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                        intent.setType("image/*");
+//                        startActivityForResult(intent, CHOOSE_FILE_RESULT_CODE);
+                    	Intent intent = new Intent();
+                    	intent.setClass(getActivity(), MainActivity.class);
+                    	startActivityForResult(intent,1);
                     }
                 });
 
@@ -123,7 +127,10 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 
         // User has picked an image. Transfer it to group owner i.e peer using
         // FileTransferService.
-        Uri uri = data.getData();
+    	Bundle imgBundle = data.getExtras();
+    	String[] uris = imgBundle.getStringArray("imglist");
+    	for(int i = 0;i < uris.length; i++){
+        String uri = uris[i];
         TextView statusText = (TextView) mContentView.findViewById(R.id.status_text);
         statusText.setText("Sending: " + uri);
         Log.d(WiFiDirectActivity.TAG, "Intent----------- " + uri);
@@ -134,6 +141,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                 info.groupOwnerAddress.getHostAddress());
         serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
         getActivity().startService(serviceIntent);
+    	}
     }
 
     @Override
