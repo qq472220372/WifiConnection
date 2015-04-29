@@ -41,46 +41,49 @@ public class FileTransferService extends IntentService {
      * @see android.app.IntentService#onHandleIntent(android.content.Intent)
      */
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleIntent(final Intent intent) {
 
-        Context context = getApplicationContext();
-        if (intent.getAction().equals(ACTION_SEND_FILE)) {
-            String fileUri = intent.getExtras().getString(EXTRAS_FILE_PATH);
-            String host = intent.getExtras().getString(EXTRAS_GROUP_OWNER_ADDRESS);
-            Socket socket = new Socket();
-            int port = intent.getExtras().getInt(EXTRAS_GROUP_OWNER_PORT);
+			        Context context = getApplicationContext();
+			        if (intent.getAction().equals(ACTION_SEND_FILE)) {
+			            String[] fileUris = intent.getStringArrayExtra("imgUris");
+			            String host = intent.getExtras().getString(EXTRAS_GROUP_OWNER_ADDRESS);
+			            
+			            int port = intent.getExtras().getInt(EXTRAS_GROUP_OWNER_PORT);
+			            for(int i=0;i<fileUris.length;i++){
+			            	Socket socket = new Socket();
+					 try {
+			                Log.d(WiFiDirectActivity.TAG, "Opening client socket - ");
+			                socket.bind(null);
+			                socket.connect((new InetSocketAddress(host, port)), SOCKET_TIMEOUT);
 
-            try {
-                Log.d(WiFiDirectActivity.TAG, "Opening client socket - ");
-                socket.bind(null);
-                socket.connect((new InetSocketAddress(host, port)), SOCKET_TIMEOUT);
-
-                Log.d(WiFiDirectActivity.TAG, "Client socket - " + socket.isConnected());
-                OutputStream stream = socket.getOutputStream();
-                ContentResolver cr = context.getContentResolver();
-                InputStream is = null;
-                try {
-                    is = cr.openInputStream(Uri.parse(fileUri));
-                } catch (FileNotFoundException e) {
-                    Log.d(WiFiDirectActivity.TAG, e.toString());
-                }
-                DeviceDetailFragment.copyFile(is, stream);
-                Log.d(WiFiDirectActivity.TAG, "Client: Data written");
-            } catch (IOException e) {
-                Log.e(WiFiDirectActivity.TAG, e.getMessage());
-            } finally {
-                if (socket != null) {
-                    if (socket.isConnected()) {
-                        try {
-                            socket.close();
-                        } catch (IOException e) {
-                            // Give up
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-
-        }
+			                Log.d(WiFiDirectActivity.TAG, "Client socket - " + socket.isConnected());
+			                OutputStream stream = socket.getOutputStream();
+			                ContentResolver cr = context.getContentResolver();
+			                InputStream is = null;
+			                try {
+			                    is = cr.openInputStream(Uri.parse("file://"+fileUris[i]));
+			                } catch (FileNotFoundException e) {
+			                    Log.d(WiFiDirectActivity.TAG, e.toString());
+			                }
+			                DeviceDetailFragment.copyFile(is, stream);
+			                Log.d(WiFiDirectActivity.TAG, "Client: Data written");
+			            } catch (IOException e) {
+			                Log.e(WiFiDirectActivity.TAG, e.getMessage());
+			            } finally {
+			                if (socket != null) {
+			                    if (socket.isConnected()) {
+			                        try {
+			                            socket.close();
+			                        } catch (IOException e) {
+			                            // Give up
+			                            e.printStackTrace();
+			                        }
+			                    }
+			                }
+			            }
+			        }
+    }
     }
 }
+
+

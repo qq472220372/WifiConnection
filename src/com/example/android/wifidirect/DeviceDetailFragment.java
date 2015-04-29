@@ -16,10 +16,17 @@
 
 package com.example.android.wifidirect;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.wifi.WpsInfo;
@@ -30,6 +37,8 @@ import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,14 +48,6 @@ import android.widget.TextView;
 import com.example.andriodmvc.R;
 import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
 import com.wifi.imgchooser.imageloader.MainActivity;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * A fragment that manages a particular peer and allows interaction with device
@@ -59,6 +60,18 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
     private WifiP2pDevice device;
     private WifiP2pInfo info;
     ProgressDialog progressDialog = null;
+    
+    public Handler myHandler = new Handler() {  
+        public void handleMessage(Message msg) {   
+            Bundle data = msg.getData();
+            String result = data.getString("Uri");
+          Intent intent = new Intent();
+          intent.setAction(android.content.Intent.ACTION_VIEW);
+          intent.setDataAndType(Uri.parse(result), "image/*");
+          getActivity().startActivity(intent);
+        }   
+   }; 
+   
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -129,19 +142,30 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         // FileTransferService.
     	Bundle imgBundle = data.getExtras();
     	String[] uris = imgBundle.getStringArray("imglist");
-    	for(int i = 0;i < uris.length; i++){
-        String uri = uris[i];
-        TextView statusText = (TextView) mContentView.findViewById(R.id.status_text);
-        statusText.setText("Sending: " + uri);
-        Log.d(WiFiDirectActivity.TAG, "Intent----------- " + uri);
-        Intent serviceIntent = new Intent(getActivity(), FileTransferService.class);
-        serviceIntent.setAction(FileTransferService.ACTION_SEND_FILE);
-        serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH, uri.toString());
-        serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
-                info.groupOwnerAddress.getHostAddress());
-        serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
-        getActivity().startService(serviceIntent);
-    	}
+//    	for(int i = 0,port = 8988;i < uris.length; i++,port++){
+//        String uri = uris[i];
+//        TextView statusText = (TextView) mContentView.findViewById(R.id.status_text);
+//        statusText.setText("Sending: " + uri);
+//        Log.d(WiFiDirectActivity.TAG, "Intent----------- " + uri);
+//        Intent serviceIntent = new Intent(getActivity(), FileTransferService.class);
+//        serviceIntent.setAction(FileTransferService.ACTION_SEND_FILE);
+//        serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH, "file://"+uri.toString());
+//        serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+//                info.groupOwnerAddress.getHostAddress());
+//        serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_PORT, port);
+//        getActivity().startService(serviceIntent);
+//    	}
+      TextView statusText = (TextView) mContentView.findViewById(R.id.status_text);
+      statusText.setText("Sending: " + uris.toString());
+      Log.d(WiFiDirectActivity.TAG, "Intent----------- " + uris.toString());
+      Intent serviceIntent = new Intent(getActivity(), FileTransferService.class);
+      serviceIntent.setAction(FileTransferService.ACTION_SEND_FILE);
+      //serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH, "file://"+uri.toString());
+      serviceIntent.putExtra("imgUris", uris);
+      serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+              info.groupOwnerAddress.getHostAddress());
+      serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
+      getActivity().startService(serviceIntent);
     }
 
     @Override
@@ -166,8 +190,20 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         // server. The file server is single threaded, single connection server
         // socket.
         if (info.groupFormed && info.isGroupOwner) {
-            new FileServerAsyncTask(getActivity(), mContentView.findViewById(R.id.status_text))
-                    .execute();
+        	
+//            new Thread(new Runnable(){
+//
+//				@Override
+//				public void run() {
+//		            new FileServerAsyncTask(getActivity(), mContentView.findViewById(R.id.status_text),8988)
+//		            .execute();
+//					
+//				}
+//            	
+//            }).start();
+            new FileServerAsyncTask(getActivity(), mContentView.findViewById(R.id.status_text),8988)
+            .execute();
+            
         } else if (info.groupFormed) {
             // The other device acts as the client. In this case, we enable the
             // get file button.
@@ -216,46 +252,54 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
      * A simple server socket that accepts connection and writes some data on
      * the stream.
      */
-    public static class FileServerAsyncTask extends AsyncTask<Void, Void, String> {
+    public class FileServerAsyncTask extends AsyncTask<Void, Void, String> {
 
         private Context context;
         private TextView statusText;
-
+        private int port;
         /**
          * @param context
          * @param statusText
          */
-        public FileServerAsyncTask(Context context, View statusText) {
+        public FileServerAsyncTask(Context context, View statusText,int port) {
             this.context = context;
             this.statusText = (TextView) statusText;
+            this.port = port;
         }
 
         @Override
         protected String doInBackground(Void... params) {
             try {
-                ServerSocket serverSocket = new ServerSocket(8988);
+                ServerSocket serverSocket = new ServerSocket(port);
                 Log.d(WiFiDirectActivity.TAG, "Server: Socket opened");
+                while(true){
                 Socket client = serverSocket.accept();
-                Log.d(WiFiDirectActivity.TAG, "Server: connection done");
-                final File f = new File(Environment.getExternalStorageDirectory() + "/"
-                        + context.getPackageName() + "/wifip2pshared-" + System.currentTimeMillis()
-                        + ".jpg");
-
-                File dirs = new File(f.getParent());
-                if (!dirs.exists())
-                    dirs.mkdirs();
-                f.createNewFile();
-
-                Log.d(WiFiDirectActivity.TAG, "server: copying files " + f.toString());
-                InputStream inputstream = client.getInputStream();
-                copyFile(inputstream, new FileOutputStream(f));
-                serverSocket.close();
-                return f.getAbsolutePath();
+                new Thread(new Task(client,context,statusText)).start();
+                }
+//                Log.d(WiFiDirectActivity.TAG, "Server: connection done");
+//                final File f = new File(Environment.getExternalStorageDirectory() + "/"
+//                        + context.getPackageName() + "/wifip2pshared-" + System.currentTimeMillis()
+//                        + ".jpg");
+//
+//                File dirs = new File(f.getParent());
+//                if (!dirs.exists())
+//                    dirs.mkdirs();
+//                f.createNewFile();
+//
+//                Log.d(WiFiDirectActivity.TAG, "server: copying files " + f.toString());
+//                InputStream inputstream = client.getInputStream();
+//                copyFile(inputstream, new FileOutputStream(f));
+//                }
+//                //serverSocket.close();
+//                //return f.getAbsolutePath();
             } catch (IOException e) {
                 Log.e(WiFiDirectActivity.TAG, e.getMessage());
                 return null;
             }
+                
         }
+        
+        
 
         /*
          * (non-Javadoc)
@@ -265,10 +309,11 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         protected void onPostExecute(String result) {
             if (result != null) {
                 statusText.setText("File copied - " + result);
-                Intent intent = new Intent();
-                intent.setAction(android.content.Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse("file://" + result), "image/*");
-                context.startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setAction(android.content.Intent.ACTION_VIEW);
+//                intent.setDataAndType(Uri.parse("file://" + result), "image/*");
+//                context.startActivity(intent);
+
             }
 
         }
@@ -284,6 +329,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 
     }
 
+   
+    
     public static boolean copyFile(InputStream inputStream, OutputStream out) {
         byte buf[] = new byte[1024];
         int len;
@@ -300,5 +347,49 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         }
         return true;
     }
+    
+     class Task implements Runnable {  
+    	   
+        private Socket socket;  
+        private Context context;
+        private TextView statusText;
+          
+        public Task(Socket socket ,Context context,TextView textView) {  
+           this.socket = socket;  
+           this.context = context;
+           this.statusText = textView;
+        }  
+          
+        public void run() {  
+        	try{
+          Log.d(WiFiDirectActivity.TAG, "Server: connection done");
+          final File f = new File(Environment.getExternalStorageDirectory() + "/"
+                  + context.getPackageName() + "/wifip2pshared-" + System.currentTimeMillis()
+                  + ".jpg");
 
-}
+          File dirs = new File(f.getParent());
+          if (!dirs.exists())
+              dirs.mkdirs();
+          f.createNewFile();
+
+          Log.d(WiFiDirectActivity.TAG, "server: copying files " + f.toString());
+          InputStream inputstream = socket.getInputStream();
+          copyFile(inputstream, new FileOutputStream(f));
+      	//statusText.setText("File copied - " + f.getName());
+          Message msg = new Message();
+          Bundle data = new Bundle();
+          data.putString("Uri", "file://"+f.getAbsolutePath());
+          msg.setData(data);
+          myHandler.sendMessage(msg);
+      	socket.close();
+        }catch (IOException e) {
+            Log.e(WiFiDirectActivity.TAG, e.getMessage());
+        }
+        }
+          //serverSocket.close();
+          //return f.getAbsolutePath();
+        }
+    
+    }
+
+
