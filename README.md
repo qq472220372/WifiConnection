@@ -1,3 +1,6 @@
-# WifiConnection
-sharing photos and messages with others
-qq472220372
+智能快捷安全小卫士
+1.一键呼救（通过蓝牙连接）
+2.人员定位 （使用百度地图api）
+3.快传照片 （使用wifi-direct传送多张照片）
+4.丢失预警 
+by qq472220372
