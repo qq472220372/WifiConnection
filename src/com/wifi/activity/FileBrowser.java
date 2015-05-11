@@ -28,7 +28,7 @@ package com.wifi.activity;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.os.Bundle;

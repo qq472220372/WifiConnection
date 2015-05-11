@@ -1,6 +1,6 @@
 package com.bluetooth.activity;
 
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 
 import android.app.Activity;
 import android.content.Intent;

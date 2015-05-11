@@ -13,7 +13,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 import com.wifi.service.WiFiServerBroadcastReceiver;
 
 import android.net.wifi.WifiInfo;
@@ -84,12 +84,12 @@ public class ConnActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
-        //»ñµÃÏµÍ³·þÎñ
+        //ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½
 		wifiManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
 		wifichannel = wifiManager.initialize(this, getMainLooper(), null);
 		wifiServerReceiver = new WiFiServerBroadcastReceiver(wifiManager,
 				wifichannel, this);
-        //×¢²á¹ã²¥¹ýÂËÆ÷
+        //×¢ï¿½ï¿½ã²¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		wifiServerReceiverIntentFilter = new IntentFilter();
 		;
 		wifiServerReceiverIntentFilter
@@ -102,7 +102,7 @@ public class ConnActivity extends Activity {
 				.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 		serverServiceIntent = null;
 		serverThreadActive = false;
-        //¶¯Ì¬×¢²á¹ã²¥½ÓÊÕÕß
+        //ï¿½ï¿½Ì¬×¢ï¿½ï¿½ã²¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		registerReceiver(wifiServerReceiver, wifiServerReceiverIntentFilter);
 		startServer();
 
@@ -115,13 +115,13 @@ public class ConnActivity extends Activity {
 		return true;
 	}
 
-	//Æô¶¯·þÎñÆ÷
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void startServer() {
 
 		new Thread(new Runnable() {
 			public void run() {
 
-				Log.v(tag, "ServerÒÑÆô¶¯");
+				Log.v(tag, "Serverï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 				String reces = null;
 				int len = 0;
@@ -132,28 +132,28 @@ public class ConnActivity extends Activity {
 				try {
 					serverSocket = new ServerSocket(9527);
 					socket = serverSocket.accept();
-					inputstream = socket.getInputStream();// µÃµ½ÊäÈëÁ÷
-					outputstream = socket.getOutputStream();// µÃµ½Êä³öÁ÷
-					// ·þÎñÆ÷µÄÌ×½Ó×Ö£¬¶Ë¿ÚÎª9527
-					Log.v(tag, "¼àÌýÖÐ");
+					inputstream = socket.getInputStream();// ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+					outputstream = socket.getOutputStream();// ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½ï¿½Ö£ï¿½ï¿½Ë¿ï¿½Îª9527
+					Log.v(tag, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 					while (true) {
-						len = inputstream.read(rece);// ½ÓÊÜ¿Í»§¶ËÏûÏ¢
+						len = inputstream.read(rece);// ï¿½ï¿½ï¿½Ü¿Í»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 						if (len != 0) {
 							reces = new String(rece, 0, len);
 							if (reces.equals("1")) {
 								outputstream.write("2".getBytes());
-								Log.v(tag, "·þÎñ¶Ë½ÓÊÕ¿Í»§¶ËÏûÏ¢³É¹¦£¡2");
+								Log.v(tag, "ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½Õ¿Í»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½É¹ï¿½ï¿½ï¿½2");
 								Intent startchat = new Intent(
 										ConnActivity.this, ChatActivity.class);
 								startchat.putExtra("ServerWifiInfo", "localhost");
 								ConnActivity.this.startActivity(startchat);
 							} else if (reces.equals("3")) {
-								Log.v(tag, "·þÎñ¶Ë½ÓÊÕ¿Í»§¶ËÏûÏ¢³É¹¦£¡3");
+								Log.v(tag, "ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½Õ¿Í»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½É¹ï¿½ï¿½ï¿½3");
 								inputstream.close();
 								outputstream.close();
 								socket.close();
 							} else {
-								Log.v(tag, "·þÎñ¶Ë½ÓÊÕ¿Í»§¶ËÏûÏ¢Ê§°Ü£¡");
+								Log.v(tag, "ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½Õ¿Í»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢Ê§ï¿½Ü£ï¿½");
 							}
 						}
 
@@ -164,7 +164,7 @@ public class ConnActivity extends Activity {
 					try {
 						inputstream.close();
 						outputstream.close();
-						socket.close();// ¼Ç×¡Ò»¶¨Òª¹Ø±ÕÕâÐ©ÊäÈë£¬Êä³öÁ÷ºÍÌ×½Ó×Ö
+						socket.close();// ï¿½ï¿½×¡Ò»ï¿½ï¿½Òªï¿½Ø±ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½ï¿½ï¿½
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -267,8 +267,8 @@ public class ConnActivity extends Activity {
 						startClient(ServerWifiInfo, ServerDevice);
 					} else {
 						new AlertDialog.Builder(ConnActivity.this)
-								.setTitle("ÌáÊ¾").setMessage("ÕýÔÚÁ¬½ÓÖÐ......ÇëÉÔºóÔÙÊÔ£¡")
-								.setPositiveButton("È·¶¨", null).show();
+								.setTitle("ï¿½ï¿½Ê¾").setMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½......ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½ï¿½Ô£ï¿½")
+								.setPositiveButton("È·ï¿½ï¿½", null).show();
 					}
 				} else {
 					dialog.setMessage("Failed");
@@ -299,7 +299,7 @@ public class ConnActivity extends Activity {
 
 	}
 
-	//Æô¶¯¿Í»§¶Ë
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½
 	public void startClient(final WifiP2pInfo wifiInfo2, WifiP2pDevice device) {
 
 		new Thread(new Runnable() {
@@ -317,7 +317,7 @@ public class ConnActivity extends Activity {
 					s = new Socket("192.168.49.1", 9527);
 					outputstream = s.getOutputStream();
 					inputstream = s.getInputStream();
-					outputstream.write("1".getBytes());// Ïò·þÎñÆ÷·¢ËÍÏûÏ¢
+					outputstream.write("1".getBytes());// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -337,13 +337,13 @@ public class ConnActivity extends Activity {
 								startchat.putExtra("ServerWifiInfo", ServerWifiInfo.groupOwnerAddress.toString());
 								ConnActivity.this.startActivity(startchat);
 								
-								Log.i(tag, "¿Í»§¶Ë½ÓÊÕ·þÎñ¶ËÏûÏ¢³É¹¦£¡");
+								Log.i(tag, "ï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½Õ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½É¹ï¿½ï¿½ï¿½");
 //								outputstream.close();
 //								inputstream.close();
 //								s.close();
 								break;
 							} else {
-								Log.i(tag, "¿Í»§¶Ë½ÓÊÕ·þÎñ¶ËÏûÏ¢Ê§°Ü£¡");
+								Log.i(tag, "ï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½Õ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢Ê§ï¿½Ü£ï¿½");
 							}
 						}
 

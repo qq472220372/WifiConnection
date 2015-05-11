@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package com.location.main;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,17 +43,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.andriodmvc.R;
-import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
-import com.wifi.imgchooser.imageloader.MainActivity;
+import com.location.main.LocationDeviceListFragment.DeviceActionListener;
+import com.quicky.wifi.R;
 
 /**
  * A fragment that manages a particular peer and allows interaction with device
  * i.e. setting up network connection and transferring data.
  */
-public class DeviceDetailFragment extends Fragment implements ConnectionInfoListener {
+public class LocationDeviceDetailFragment extends Fragment implements ConnectionInfoListener {
 
     protected static final int CHOOSE_FILE_RESULT_CODE = 20;
     private View mContentView = null;
@@ -62,7 +62,17 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
     ProgressDialog progressDialog = null;
     
     public Handler myHandler = new Handler() {  
-        public void handleMessage(Message msg) {   
+        public void handleMessage(Message msg) {
+        	if(msg.what==1){
+              //启动百度地图，并监听客户端的位置信息
+              Intent intent = new Intent();
+              Bundle bundle =new Bundle();
+              bundle.putString("type", "server");
+              intent.putExtras(bundle);
+              intent.setClass(getActivity(), LocationDemo.class);
+              startActivity(intent);
+              return ;
+        	}
             Bundle data = msg.getData();
             String result = data.getString("Uri");
           Intent intent = new Intent();
@@ -82,6 +92,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mContentView = inflater.inflate(R.layout.device_detail, null);
+        Button startClient = (Button)mContentView.findViewById(R.id.btn_start_client);
+        startClient.setText("发送位置信息");
         mContentView.findViewById(R.id.btn_connect).setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -126,9 +138,18 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 //                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 //                        intent.setType("image/*");
 //                        startActivityForResult(intent, CHOOSE_FILE_RESULT_CODE);
-                    	Intent intent = new Intent();
-                    	intent.setClass(getActivity(), MainActivity.class);
-                    	startActivityForResult(intent,1);
+//                    	Intent intent = new Intent();
+//                    	intent.setClass(getActivity(), MainActivity.class);
+//                    	startActivityForResult(intent,1);
+                    	//开启百度地图定位，获取GPS坐标并发送给服务端
+                		Intent intent = new Intent();
+                		Bundle bundle = new Bundle();
+                		bundle.putString("type", "client");
+                		//bundle.putString("host", info.groupOwnerAddress.getHostAddress());
+                		bundle.putString("host", "192.168.49.1");
+                		intent.putExtras(bundle);
+                		intent.setClass(getActivity(), LocationDemo.class);
+                		startActivity(intent);
                     }
                 });
 
@@ -157,14 +178,14 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 //    	}
       TextView statusText = (TextView) mContentView.findViewById(R.id.status_text);
       statusText.setText("Sending: " + uris.toString());
-      Log.d(WiFiDirectActivity.TAG, "Intent----------- " + uris.toString());
-      Intent serviceIntent = new Intent(getActivity(), FileTransferService.class);
-      serviceIntent.setAction(FileTransferService.ACTION_SEND_FILE);
+      Log.d(LocationWiFiDirectActivity.TAG, "Intent----------- " + uris.toString());
+      Intent serviceIntent = new Intent(getActivity(), LocationTransferService.class);
+      serviceIntent.setAction(LocationTransferService.ACTION_SEND_FILE);
       //serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH, "file://"+uri.toString());
       serviceIntent.putExtra("imgUris", uris);
-      serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+      serviceIntent.putExtra(LocationTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
               info.groupOwnerAddress.getHostAddress());
-      serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
+      serviceIntent.putExtra(LocationTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
       getActivity().startService(serviceIntent);
     }
 
@@ -201,8 +222,14 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 //				}
 //            	
 //            }).start();
-            new FileServerAsyncTask(getActivity(), mContentView.findViewById(R.id.status_text),8988)
-            .execute();
+//            new FileServerAsyncTask(getActivity(), mContentView.findViewById(R.id.status_text),8988)
+//            .execute();
+            
+//            //启动百度地图，并监听客户端的位置信息
+//            Intent intent = new Intent();
+//            intent.setClass(getActivity(), LocationDemo.class);
+//            startActivity(intent);
+            myHandler.sendEmptyMessage(1);
             
         } else if (info.groupFormed) {
             // The other device acts as the client. In this case, we enable the
@@ -271,7 +298,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         protected String doInBackground(Void... params) {
             try {
                 ServerSocket serverSocket = new ServerSocket(port);
-                Log.d(WiFiDirectActivity.TAG, "Server: Socket opened");
+                Log.d(LocationWiFiDirectActivity.TAG, "Server: Socket opened");
                 while(true){
                 Socket client = serverSocket.accept();
                 new Thread(new Task(client,context,statusText)).start();
@@ -293,7 +320,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 //                //serverSocket.close();
 //                //return f.getAbsolutePath();
             } catch (IOException e) {
-                Log.e(WiFiDirectActivity.TAG, e.getMessage());
+                Log.e(LocationWiFiDirectActivity.TAG, e.getMessage());
                 return null;
             }
                 
@@ -342,12 +369,13 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
             out.close();
             inputStream.close();
         } catch (IOException e) {
-            Log.d(WiFiDirectActivity.TAG, e.toString());
+            Log.d(LocationWiFiDirectActivity.TAG, e.toString());
             return false;
         }
         return true;
     }
     
+    //服務器接收線程
      class Task implements Runnable {  
     	   
         private Socket socket;  
@@ -362,7 +390,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
           
         public void run() {  
         	try{
-          Log.d(WiFiDirectActivity.TAG, "Server: connection done");
+          Log.d(LocationWiFiDirectActivity.TAG, "Server: connection done");
           final File f = new File(Environment.getExternalStorageDirectory() + "/"
                   + context.getPackageName() + "/wifip2pshared-" + System.currentTimeMillis()
                   + ".jpg");
@@ -372,7 +400,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
               dirs.mkdirs();
           f.createNewFile();
 
-          Log.d(WiFiDirectActivity.TAG, "server: copying files " + f.toString());
+          Log.d(LocationWiFiDirectActivity.TAG, "server: copying files " + f.toString());
           InputStream inputstream = socket.getInputStream();
           copyFile(inputstream, new FileOutputStream(f));
       	//statusText.setText("File copied - " + f.getName());
@@ -383,7 +411,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
           myHandler.sendMessage(msg);
       	socket.close();
         }catch (IOException e) {
-            Log.e(WiFiDirectActivity.TAG, e.getMessage());
+            Log.e(LocationWiFiDirectActivity.TAG, e.getMessage());
         }
         }
           //serverSocket.close();

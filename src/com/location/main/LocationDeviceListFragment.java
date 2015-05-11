@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package com.location.main;
 
 import android.app.ListFragment;
 import android.app.ProgressDialog;
@@ -36,13 +36,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 
 /**
  * A ListFragment that displays available peers on discovery and requests the
  * parent activity to handle user interaction events
  */
-public class DeviceListFragment extends ListFragment implements PeerListListener {
+public class LocationDeviceListFragment extends ListFragment implements PeerListListener {
 
     private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
     ProgressDialog progressDialog = null;
@@ -70,7 +70,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
     }
 
     private static String getDeviceStatus(int deviceStatus) {
-        Log.d(WiFiDirectActivity.TAG, "Peer status :" + deviceStatus);
+        Log.d(LocationWiFiDirectActivity.TAG, "Peer status :" + deviceStatus);
         switch (deviceStatus) {
             case WifiP2pDevice.AVAILABLE:
                 return "Available";
@@ -163,7 +163,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
         peers.addAll(peerList.getDeviceList());
         ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();
         if (peers.size() == 0) {
-            Log.d(WiFiDirectActivity.TAG, "No devices found");
+            Log.d(LocationWiFiDirectActivity.TAG, "No devices found");
             return;
         }
 

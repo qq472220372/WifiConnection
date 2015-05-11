@@ -1,11 +1,10 @@
 package com.bluetooth.activity;
 /**
- * ÃèÊö£º´ËÀàÎªÉ¨ÃèºÍÁ¬½ÓÀ¶ÑÀÉè±¸µ¯³ö¿ò
- * ×÷ÓÃ£ºÉ¨ÃèºÍÁ¬½ÓÀ¶ÑÀÉè±¸
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÉ¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ï¿½Ã£ï¿½É¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸
  */
 import java.util.Set;
-
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

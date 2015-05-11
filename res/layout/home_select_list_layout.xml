@@ -54,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="61dip"
         android:clickable="true"
+        android:onClick="startLocation"
         android:background="@drawable/home_select_list_style">
         <ImageView 
             android:id="@+id/home_img_shopping"

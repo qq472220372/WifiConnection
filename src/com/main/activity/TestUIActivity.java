@@ -4,8 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.bluetooth.activity.BluetoothChatActivity;
-import com.example.andriodmvc.R;
-import com.example.android.wifidirect.WiFiDirectActivity;
+import com.location.main.LocationActivity;
+import com.location.main.LocationWiFiDirectActivity;
+import com.quicky.wifi.R;
+import com.wifidirect.core.WiFiDirectActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -58,7 +60,7 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				toastInfo("ÉèÖÃÊôÐÔ");
+				toastInfo("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 		});
         
@@ -68,7 +70,7 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				toastInfo("×¢²á°´Å¥");
+				toastInfo("×¢ï¿½á°´Å¥");
 			}
 		});
         login_ImageButton = (ImageButton) findViewById(R.id.home_bn_login);
@@ -79,7 +81,7 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(TestUIActivity.this,MainLogon.class);
 				startActivity(intent);
-				toastInfo("µÇÂ¼°´Å¥");
+				toastInfo("ï¿½ï¿½Â¼ï¿½ï¿½Å¥");
 			}
 		});
         
@@ -114,7 +116,7 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			toastInfo("µã»÷ÊÂ¼þ");
+			toastInfo("ï¿½ï¿½ï¿½ï¿½Â¼ï¿½");
 		}
 	};
     private OnTouchListener onTouchListener = new OnTouchListener() {
@@ -150,12 +152,12 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
     	Date date = new Date();
     	Calendar c = Calendar.getInstance();
     	c.setTime(date);
-    	String[] weekDays = {"ÐÇÆÚÈÕ", "ÐÇÆÚÒ»", "ÐÇÆÚ¶þ", "ÐÇÆÚÈý", "ÐÇÆÚËÄ", "ÐÇÆÚÎå", "ÐÇÆÚÁù"};
+    	String[] weekDays = {"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Ò»", "ï¿½ï¿½ï¿½Ú¶ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"};
     	int w = c.get(Calendar.DAY_OF_WEEK) - 1 ;
     	if (w < 0) {
 			w = 0;
 		}
-    	String mDate = c.get(Calendar.YEAR)+"Äê" + c.get(Calendar.MONTH) + "ÔÂ" + c.get(Calendar.DATE) + "ÈÕ  " + weekDays[w];
+    	String mDate = c.get(Calendar.YEAR)+"ï¿½ï¿½" + c.get(Calendar.MONTH) + "ï¿½ï¿½" + c.get(Calendar.DATE) + "ï¿½ï¿½  " + weekDays[w];
     	return mDate;
     }
     private OnClickListener clickListener_home = new OnClickListener() {
@@ -323,5 +325,14 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 		Intent intent = new Intent();
 		intent.setClass(TestUIActivity.this, BluetoothChatActivity.class);
 		startActivity(intent);	
+	}
+	
+	public void startLocation(View view){
+		
+		Intent intent = new Intent(TestUIActivity.this,LocationWiFiDirectActivity.class);
+		startActivity(intent);
+//		Intent intent = new Intent();
+//		intent.setClass(TestUIActivity.this, LocationActivity.class);
+//		startActivity(intent);
 	}
 }

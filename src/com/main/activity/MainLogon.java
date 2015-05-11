@@ -3,7 +3,7 @@ package com.main.activity;
 
 
 import com.bluetooth.activity.SecondActivity;
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -58,13 +58,13 @@ public class MainLogon extends Activity {
 					Editor editor = mShared.edit();
 					editor.putString(KEY_PASS, pass);
 					editor.putBoolean("isCheckd", true);
-					editor.commit();//°ÑÐÅÏ¢±£´æÔÚÎÄ¼þÖÐ
+					editor.commit();//ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 				}	
 				if(!isChecked){
 					Editor editor = mShared.edit();
 					editor.putString(KEY_PASS, "");
 					editor.putBoolean("isCheckd", false);
-					editor.commit();//°ÑÐÅÏ¢±£´æÔÚÎÄ¼þÖÐ
+					editor.commit();//ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 				}
 			}
 		});
@@ -78,14 +78,14 @@ public class MainLogon extends Activity {
 			String pass = editPass.getText().toString();
 			Editor editor = mShared.edit();
 			editor.putString(KEY_NAME,name);
-			editor.commit();//°ÑÐÅÏ¢±£´æÔÚÎÄ¼þÖÐ
+			editor.commit();//ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 			if((name.trim().length()!=0) && (pass.trim().length()!=0)){
 				Intent intent = new Intent();
 				intent.setClass(MainLogon.this, SecondActivity.class);
-				startActivity(intent);//Æô¶¯intent
+				startActivity(intent);//ï¿½ï¿½ï¿½ï¿½intent
 			}
 			else{
-				Toast.makeText(MainLogon.this, "ÓÃ»§ÃûºÍÃÜÂë²»ÄÜÊäÈëÎª¿Õ£¡", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainLogon.this, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½", Toast.LENGTH_SHORT).show();
 			}
 				
 		}

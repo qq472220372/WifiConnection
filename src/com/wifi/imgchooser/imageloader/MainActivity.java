@@ -31,7 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 import com.wifi.imgchooser.bean.ImageFloder;
 import com.wifi.imgchooser.imageloader.ListImageDirPopupWindow.OnImageDirSelected;
 

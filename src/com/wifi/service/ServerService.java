@@ -10,7 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Calendar;
 
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 import com.wifi.activity.ChatActivity;
 import com.wifi.entity.ChatMsgEntity;
 import com.wifi.util.ChatMsgViewAdapter;
@@ -42,7 +42,7 @@ public class ServerService extends IntentService{
 	protected void onHandleIntent(Intent intent) {
 		port = ((Integer) intent.getExtras().get("port")).intValue();
 		//handleUtil = (HandleUtil)intent.getSerializableExtra("Handler");
-		//ÐÂ½¨Action
+		//ï¿½Â½ï¿½Action
 		intent = new Intent("com.wifi.broadcast"); 
 		
 		int len = 0;
@@ -50,7 +50,7 @@ public class ServerService extends IntentService{
 		InputStream inputstream = null;
 		byte[] rece = new byte[1000];
 		String reces = null;	
-		Log.v(TAG, "Server¼àÌýÖÐ");
+		Log.v(TAG, "Serverï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		try {
 			serversocket = new ServerSocket(port);
 			Socket socket = serversocket.accept();
@@ -58,14 +58,14 @@ public class ServerService extends IntentService{
 //			outputstream = socket.getOutputStream();
             
 //			while(true){
-//			len = inputstream.read(rece);// ½ÓÊÜ¿Í»§¶ËÏûÏ¢
+//			len = inputstream.read(rece);// ï¿½ï¿½ï¿½Ü¿Í»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 //			if (len != 0) {
 //				//reces = new String(rece, 0, len);
 //				//rec = reces;
-//                //·þÎñÆ÷½ÓÊÕÏûÏ¢¸üÐÂÖ÷½çÃæ
-//				Log.v(TAG, "Service¸üÐÂÖ÷½çÃæ");
+//                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//				Log.v(TAG, "Serviceï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 //				intent.putExtra("Update", "update");
-//				//·¢ËÍ¸üÐÂ½çÃæ¹ã²¥
+//				//ï¿½ï¿½ï¿½Í¸ï¿½ï¿½Â½ï¿½ï¿½ï¿½ã²¥
 //				sendBroadcast(intent);
 //				outputstream.write("close".getBytes());
 //				break;
@@ -86,10 +86,10 @@ public class ServerService extends IntentService{
 			    bytesRead = inputstream.read(buffer, 0, buffer.length);
 			    if(bytesRead == -1)
 			    {
-					Log.v(TAG, "Service¸üÐÂÖ÷½çÃæ");
+					Log.v(TAG, "Serviceï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 					intent.putExtra("Update", "update");
 					intent.putExtra("imgPath", "./sdcard/"+savedAs);
-					//·¢ËÍ¸üÐÂ½çÃæ¹ã²¥
+					//ï¿½ï¿½ï¿½Í¸ï¿½ï¿½Â½ï¿½ï¿½ï¿½ã²¥
 					sendBroadcast(intent);
 			    	break;
 			    }			    

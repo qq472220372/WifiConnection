@@ -6,8 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 import com.wifi.imgchooser.bean.ImageFloder;
 import com.wifi.imgchooser.utils.BasePopupWindowForListView;
 import com.wifi.imgchooser.utils.CommonAdapter;

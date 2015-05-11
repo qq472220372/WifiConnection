@@ -2,7 +2,7 @@ package com.wifi.util;
 
 import java.util.ArrayList;
 
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 import com.wifi.entity.ImgEntity;
 
 import android.content.Context;

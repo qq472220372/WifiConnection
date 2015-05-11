@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package com.wifidirect.core;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -36,8 +36,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.andriodmvc.R;
-import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
+import com.quicky.wifi.R;
+import com.wifidirect.core.DeviceListFragment.DeviceActionListener;
 
 /**
  * An activity that uses WiFi Direct APIs to discover and connect with available

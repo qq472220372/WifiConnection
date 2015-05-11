@@ -1,39 +1,34 @@
 package com.bluetooth.activity;
 
-import com.bluetooth.service.BluetoothChatService;
-import com.example.andriodmvc.R;
-import com.main.activity.TestUIActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bluetooth.service.BluetoothChatService;
+import com.main.activity.TestUIActivity;
+import com.quicky.wifi.R;
 
 @SuppressLint("NewApi")
 public class BluetoothChatActivity extends Activity {

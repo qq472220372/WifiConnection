@@ -8,8 +8,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 import com.wifi.imgchooser.utils.CommonAdapter;
 import com.wifi.imgchooser.utils.ViewHolder;
 

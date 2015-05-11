@@ -32,7 +32,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andriodmvc.R;
+import com.quicky.wifi.R;
 import com.wifi.entity.ChatMsgEntity;
 import com.wifi.entity.ImgEntity;
 import com.wifi.service.SendMessageService;
@@ -72,18 +72,18 @@ public class ChatActivity extends Activity {
     
     public  ArrayList<ImgEntity> imgList = new ArrayList<ImgEntity>();
     
-    public Handler handler = new Handler() {    //ÐÂ½¨¾ä±ú¶¯Ì¬¸Ä±ä½çÃæ
+    public Handler handler = new Handler() {    //ï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¬ï¿½Ä±ï¿½ï¿½ï¿½ï¿½
     	@Override
     	public void handleMessage(Message msg) {
            if(msg.what == 1 && BitmapFactory.decodeFile(imgPath)!=null){
-        	   //updateView("ÊÕµ½Ò»ÕÅÍ¼Æ¬£¡");
-        	   updateImg(BitmapFactory.decodeFile(imgPath),R.layout.list_img_layout_income,"°²×¿Éè±¸");
+        	   //updateView("ï¿½Õµï¿½Ò»ï¿½ï¿½Í¼Æ¬ï¿½ï¿½");
+        	   updateImg(BitmapFactory.decodeFile(imgPath),R.layout.list_img_layout_income,"ï¿½ï¿½×¿ï¿½è±¸");
            }
            else {
         	   Log.i(TAG, "img is null");
         	   try {
         		   Thread.sleep(5000);
-                	   updateImg(BitmapFactory.decodeFile(imgPath),R.layout.list_img_layout_income,"°²×¿Éè±¸");
+                	   updateImg(BitmapFactory.decodeFile(imgPath),R.layout.list_img_layout_income,"ï¿½ï¿½×¿ï¿½è±¸");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -116,11 +116,11 @@ public class ChatActivity extends Activity {
         Log.v(TAG, "onCreate >>>>>>");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        //×¢²á¹ã²¥¼àÌý¹ýÂËÆ÷
+        //×¢ï¿½ï¿½ã²¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		wifiServerReceiverIntentFilter = new IntentFilter();
-		//Ìí¼ÓAction
+		//ï¿½ï¿½ï¿½Action
 		wifiServerReceiverIntentFilter.addAction("com.wifi.broadcast");
-		//×¢²á¹ã²¥¼àÌýÆ÷
+		//×¢ï¿½ï¿½ã²¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		registerReceiver(receiver,wifiServerReceiverIntentFilter);
 		
         server = "";
@@ -161,7 +161,7 @@ public class ChatActivity extends Activity {
                 //intent1.putExtra("message", msgText);
                 startService(intent1);
                 //updateView(msgText);
-                updateImg(BitmapFactory.decodeFile(fileToSend.getPath()),R.layout.list_img_layout,"ÎÒ");
+                updateImg(BitmapFactory.decodeFile(fileToSend.getPath()),R.layout.list_img_layout,"ï¿½ï¿½");
                 }
                 else{
                 	
@@ -210,8 +210,8 @@ public class ChatActivity extends Activity {
         				}
         				else{
         					new AlertDialog.Builder(ChatActivity.this)
-							.setTitle("ÌáÊ¾").setMessage("ÇëÑ¡Ôñjpg¸ñÊ½µÄÍ¼Æ¬")
-							.setPositiveButton("È·¶¨", null).show();
+							.setTitle("ï¿½ï¿½Ê¾").setMessage("ï¿½ï¿½Ñ¡ï¿½ï¿½jpgï¿½ï¿½Ê½ï¿½ï¿½Í¼Æ¬")
+							.setPositiveButton("È·ï¿½ï¿½", null).show();
         				}
         			}
         			else
@@ -232,9 +232,9 @@ public class ChatActivity extends Activity {
             }
 	}
 	
-	//¸üÐÂ½çÃæº¯Êý
+	//ï¿½ï¿½ï¿½Â½ï¿½ï¿½æº¯ï¿½ï¿½
     public void updateView(String msgText){
-    	Log.i(TAG, "Activity¸üÐÂÖ÷½çÃæ");
+    	Log.i(TAG, "Activityï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         String name = getName();
         String date = getDate();
         int RId = R.layout.list_say_me_item;
@@ -246,7 +246,7 @@ public class ChatActivity extends Activity {
     }
 
     public void updateImg(Bitmap image,int id,String name1){
-    	Log.i(TAG, "¸üÐÂÍ¼Æ¬ÐÅÏ¢");
+    	Log.i(TAG, "ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ï¢");
     	String name = name1;
     	String date = getDate();
     	//Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.download);
