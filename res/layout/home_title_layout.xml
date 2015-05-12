@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dip"
-        android:background="@drawable/title_home"/>
+        android:background="@drawable/quicky1"/>
     <ImageButton 
         android:id="@+id/title_set_bn"
         android:layout_width="59dip"
