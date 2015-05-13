@@ -27,6 +27,7 @@
                   android:layout_below="@id/textView1"
                   android:layout_marginBottom="20px"
                  android:hint="姓 名" 
+                 android:text="皮皮"
                  android:gravity="center"
 
             />
@@ -38,6 +39,7 @@
                   android:layout_alignParentLeft="true"
                   android:layout_marginBottom="20px"
                  android:hint="住 址" 
+                 android:text="江西财经"
                  android:gravity="center"
 
             />           <com.beardedhen.androidbootstrap.BootstrapEditText
@@ -49,6 +51,7 @@
                   android:layout_alignParentLeft="true"
                   android:layout_marginBottom="20px"
                  android:hint="通 知 手 机" 
+                 android:text="18770021320"
                  android:gravity="center"
 
             />
@@ -61,7 +64,8 @@
                   android:layout_below="@id/bootstrapText3"
                   android:layout_alignParentLeft="true"
                   android:layout_marginBottom="20px"
-                 android:hint="报 警 距 离" 
+                 android:hint="报 警 距 离 (公里)" 
+                 android:text="3"
                  android:gravity="center"
 
             />

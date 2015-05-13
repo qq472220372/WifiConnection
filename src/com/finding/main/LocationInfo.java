@@ -2,8 +2,8 @@ package com.finding.main;
 
 public class LocationInfo {
 
-	private String Latitude;
-	private String Longitude;
+	private double Latitude;
+	private double Longitude;
 	private String name;
 	private String homeAddress;
 	private String phoneNumber;
@@ -21,7 +21,7 @@ public class LocationInfo {
 		this.distance = distance;
 	}
 
-	public LocationInfo(String latitude, String longitude, String name,
+	public LocationInfo(double latitude, double longitude, String name,
 			String homeAddress, String phoneNumber,double distance) {
 		super();
 		Latitude = latitude;
@@ -32,19 +32,27 @@ public class LocationInfo {
 		this.distance = distance;
 	}
 
-	public String getLatitude() {
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
+	public double getLatitude() {
 		return Latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(double latitude) {
 		Latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public double getLongitude() {
 		return Longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		Longitude = longitude;
 	}
 
