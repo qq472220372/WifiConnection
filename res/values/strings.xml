@@ -11,8 +11,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="select_dir">Select Directory</string>
     <string name="file_browser_title">File Browser</string>
-
-     <string name="home_tv">我的家</string>
+    <string name="home_tv">我的家</string>
     <string name="style_tv">搭配</string>
     <string name="shopping_tv">逛街</string>
     <string name="show_tv">晒货</string>
@@ -24,12 +23,12 @@
     <string name="index_shopping_info_tv">看看大家都在哪里</string>
     <string name="index_show_tv">快传照片/PICTURE</string>
     <string name="index_show_info_tv">免流量分享照片！</string>
-    <string name="index_search_tv">搜索/SEARCH</string>
-    <string name="index_search_info_tv">找找好玩的地方</string>
+    <string name="index_search_tv">防走失/SEARCH</string>
+    <string name="index_search_info_tv">防止老人孩子走失神器</string>
     <string name="index_browse_tv">更多信息/BROWSER</string>
     <string name="index_browse_info_tv">了解我们的软件</string>
-    
-        <!--  BluetoothChatActivity -->
+
+    <!-- BluetoothChatActivity -->
     <string name="send">发送</string>
     <string name="clear">清空</string>
     <string name="not_connected">未连接设备</string>
@@ -38,7 +37,7 @@
     <string name="title_connected_to">已经连接: </string>
     <string name="title_not_connected">未连接</string>
 
-    <!--  DeviceListActivity -->
+    <!-- DeviceListActivity -->
     <string name="scanning">扫描设备...</string>
     <string name="select_device">选择一个设备连接</string>
     <string name="none_paired">没有配对的设备</string>
@@ -50,7 +49,6 @@
     <!-- Menu -->
     <string name="connect">连接设备</string>
     <string name="discoverable">允许发现</string>
-    
     <string name="enable_p2p_button">Wifi直连  On/Off</string>
     <string name="discover_peers_button">搜索设备</string>
     <string name="connect_peer_button">连接</string>
@@ -65,8 +63,7 @@
     <string name="group_owner_text">"我是小型局域网拥有者? "</string>
     <string name="label_me">我</string>
     <string name="label_peers">设备</string>
-    
-     <string name="startlocation">开启定位</string>
+    <string name="startlocation">开启定位</string>
     <string name="stoplocation">停止定位</string>
     <string name="error_code_desc">错误码说明</string>
     <string name="qa_title">常见问题</string>
@@ -89,5 +86,6 @@
 		501～700：key验证失败\n</string>
     <string name="qa_callback">问题反馈方法</string>
     <string name="qa_callback_mail">mapapi@baidu.com</string>
-    
+    <string name="title_activity_finding">FindingActivity</string>
+
 </resources>

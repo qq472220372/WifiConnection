@@ -17,16 +17,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-	<uses-permission android:name="android.permission.SEND_SMS"/>
-	<uses-permission android:name="android.permission.REORDER_TASKS"/>
-    
-	    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
     </uses-permission>
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
     </uses-permission>
-
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" >
     </uses-permission>
     <!-- <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"></uses-permission> -->
@@ -49,7 +46,6 @@
     </uses-permission>
     <uses-permission android:name="android.permission.RECORD_AUDIO" >
     </uses-permission>
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -65,20 +61,21 @@
         android:normalScreens="false"
         android:resizeable="true"
         android:smallScreens="true" />
-	
-	<uses-feature android:name="android.hardware.wifi.direct" android:required="true"/>
-	
+
+    <uses-feature
+        android:name="android.hardware.wifi.direct"
+        android:required="true" />
+
     <application
         android:name="com.location.main.DemoApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
-                <meta-data
+        <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="cN7lldMb6jm362XLi3dlbOG5" />
-                
+
         <activity
             android:name="com.main.activity.TestUIActivity"
             android:label="@string/title_activity_conn" >
@@ -88,7 +85,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--  
+        <!--
                 <activity
             android:name="com.wifi.activity.ConnActivity"
             android:label="@string/title_activity_conn" >
@@ -102,13 +99,15 @@
             android:label="@string/app_name" >
         </activity>
         -->
-                <activity android:name="com.main.activity.MainLogon"
-                  android:label="@string/app_name"
-                  android:windowSoftInputMode="stateAlwaysHidden"
-                  android:configChanges="orientation|keyboardHidden"/>
-                        <activity android:name=".DeviceListActivity"
-                  android:label="@string/select_device"
-                  android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name="com.main.activity.MainLogon"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".DeviceListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/select_device" />
         <activity
             android:name="com.bluetooth.activity.SecondActivity"
             android:label="@string/app_name" >
@@ -116,22 +115,21 @@
         <activity
             android:name="com.bluetooth.activity.BluetoothChatActivity"
             android:label="@string/app_name" >
-        </activity> 
-        
+        </activity>
         <activity
             android:name="com.wifi.imgchooser.imageloader.MainActivity"
             android:label="@string/app_name" >
-        </activity> 
-        
-                <activity
+        </activity>
+        <activity
             android:name="com.location.main.LocationDemo"
             android:label="@string/app_name" >
-        </activity> 
-                        <activity
+        </activity>
+        <activity
             android:name="com.location.main.LocationActivity"
             android:label="@string/app_name" >
-        </activity> 
-              <service
+        </activity>
+
+        <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
@@ -139,35 +137,42 @@
 
         <activity
             android:name="com.location.main.LocationWiFiDirectActivity"
-            android:label="@string/app_name" android:launchMode="singleTask"
-                    android:theme="@android:style/Theme.Holo">
-                            
-        </activity> 
-        
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Holo" >
+        </activity>
         <activity
             android:name="com.wifidirect.core.WiFiDirectActivity"
-            android:label="@string/app_name" android:launchMode="singleTask"
-                    android:theme="@android:style/Theme.Holo">
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Holo" >
         </activity>
 
         <!-- Used for transferring files  after a successful connection -->
-        <service android:enabled="true" android:name="com.wifidirect.core.FileTransferService" />
-        <service android:enabled="true" android:name="com.location.main.LocationTransferService" />
-        <receiver 
-            android:name="com.bluetooth.service.CallBroadCast">
-             <intent-filter>
+        <service
+            android:name="com.wifidirect.core.FileTransferService"
+            android:enabled="true" />
+        <service
+            android:name="com.location.main.LocationTransferService"
+            android:enabled="true" />
+
+        <receiver android:name="com.bluetooth.service.CallBroadCast" >
+            <intent-filter>
                 <action android:name="call.broastcast" />
-                
             </intent-filter>
         </receiver>
-        <!--  
+        <!--
         <service 
             android:name="com.wifi.service.SendMessageService"></service>
                 <service 
             android:name="com.wifi.service.ServerService"></service>
-            -->
+        -->
+        <activity
+            android:name="com.finding.main.FindingActivity"
+            android:label="@string/title_activity_finding" >
+        </activity>
     </application>
-  <!--  
+    <!--
     <application        
         android:name="com.location.main.DemoApplication"
         android:icon="@drawable/ic_launcher"
@@ -182,6 +187,6 @@
         </activity> 
         
         </application>
-        -->  
+    -->
 
 </manifest>
