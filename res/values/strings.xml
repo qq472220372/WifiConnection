@@ -25,8 +25,8 @@
     <string name="index_show_info_tv">免流量分享照片！</string>
     <string name="index_search_tv">防走失/SEARCH</string>
     <string name="index_search_info_tv">防止老人孩子走失神器</string>
-    <string name="index_browse_tv">更多信息/BROWSER</string>
-    <string name="index_browse_info_tv">了解我们的软件</string>
+    <string name="index_browse_tv">一键预警/PROTECT</string>
+    <string name="index_browse_info_tv">保护您的安全</string>
 
     <!-- BluetoothChatActivity -->
     <string name="send">发送</string>

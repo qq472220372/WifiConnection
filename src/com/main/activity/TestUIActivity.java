@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.bluetooth.activity.BluetoothChatActivity;
+import com.example.wificam.WificamActivity;
 import com.finding.main.FindingActivity;
 import com.location.main.LocationActivity;
 import com.location.main.LocationWiFiDirectActivity;
@@ -339,6 +340,11 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 	
 	public void startFinding(View view){
 		Intent intent = new Intent(TestUIActivity.this,FindingActivity.class);
+		startActivity(intent);
+	}
+	
+	public void wificam(View view){
+		Intent intent = new Intent(TestUIActivity.this,WificamActivity.class);
 		startActivity(intent);
 	}
 }

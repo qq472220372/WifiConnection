@@ -138,7 +138,7 @@
             android:src="@drawable/home_index_arrow"/>
     </RelativeLayout>
     
-                            <RelativeLayout 
+        <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="61dip"
         android:clickable="true"
@@ -182,10 +182,11 @@
             android:src="@drawable/home_index_arrow"/>
     </RelativeLayout>
     
-                                    <RelativeLayout 
+        <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="61dip"
         android:clickable="true"
+        android:onClick="wificam"
         android:background="@drawable/home_select_list_style">
         <ImageView 
             android:id="@+id/home_img_browse"
