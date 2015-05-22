@@ -32,14 +32,14 @@ public class CallBroadCast extends BroadcastReceiver {
 						}catch(Exception e){
 							e.printStackTrace();
 						}
-						Toast.makeText(arg0, "·¢ËÍ³É¹¦!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(arg0, "ï¿½ï¿½ï¿½Í³É¹ï¿½!", Toast.LENGTH_SHORT).show();
 						}	
 					else{
-						Toast.makeText(arg0, "¶ÌÐÅ²»ÄÜÊäÈëÎª¿Õ", Toast.LENGTH_LONG).show();
+						Toast.makeText(arg0, "ï¿½ï¿½ï¿½Å²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½", Toast.LENGTH_LONG).show();
 						}	
 					}
 				else{
-					Toast.makeText(arg0, "ºÅÂë²»ÄÜÊäÈëÎª¿Õ", Toast.LENGTH_LONG).show();
+					Toast.makeText(arg0, "ï¿½ï¿½ï¿½ë²»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½", Toast.LENGTH_LONG).show();
 					}	
 		    }
 

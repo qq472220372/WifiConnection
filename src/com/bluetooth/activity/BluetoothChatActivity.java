@@ -1,34 +1,39 @@
 package com.bluetooth.activity;
 
+
+import com.bluetooth.service.BluetoothChatService;
+import com.quicky.wifi.R;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bluetooth.service.BluetoothChatService;
-import com.main.activity.TestUIActivity;
-import com.quicky.wifi.R;
 
 @SuppressLint("NewApi")
 public class BluetoothChatActivity extends Activity {
@@ -275,7 +280,7 @@ public class BluetoothChatActivity extends Activity {
 			case MESSAGE_DEVICE_NAME:
 				mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
 				Toast.makeText(getApplicationContext(),
-						"连接�?" + mConnectedDeviceName, Toast.LENGTH_SHORT)
+						"连接到" + mConnectedDeviceName, Toast.LENGTH_SHORT)
 						.show();
 				break;
 			case MESSAGE_TOAST:
@@ -304,7 +309,7 @@ public class BluetoothChatActivity extends Activity {
 			if (resultCode == Activity.RESULT_OK) {
 				setupChat();
 			} else {
-				Log.d(TAG, "蓝牙未启�?");
+				Log.d(TAG, "蓝牙未启用");
 				Toast.makeText(this, R.string.bt_not_enabled_leaving,
 						Toast.LENGTH_SHORT).show();
 				finish();
@@ -337,7 +342,7 @@ public class BluetoothChatActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			Intent intent = new Intent();
-			intent.setClass(BluetoothChatActivity.this, TestUIActivity.class);
+			intent.setClass(BluetoothChatActivity.this, SecondActivity.class);
 			startActivity(intent);
 			return true;
 		}

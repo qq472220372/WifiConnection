@@ -4,6 +4,7 @@ package com.bluetooth.activity;
  * ���ã�ɨ������������豸
  */
 import java.util.Set;
+
 import com.quicky.wifi.R;
 
 import android.app.Activity;

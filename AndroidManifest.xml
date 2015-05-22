@@ -71,8 +71,8 @@
     <application
         android:name="com.location.main.DemoApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/quickyicon"
+        android:label="Quickey"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -101,23 +101,22 @@
             android:label="@string/app_name" >
         </activity>
         -->
+
         <activity
-            android:name="com.main.activity.MainLogon"
-            android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".DeviceListActivity"
+            android:name="com.bluetooth.activity.DeviceListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/select_device" />
-        <activity
-            android:name="com.bluetooth.activity.SecondActivity"
-            android:label="@string/app_name" >
-        </activity>
+
         <activity
             android:name="com.bluetooth.activity.BluetoothChatActivity"
             android:label="@string/app_name" >
         </activity>
+        
+                <activity
+            android:name="com.bluetooth.activity.SecondActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
         <activity
             android:name="com.wifi.imgchooser.imageloader.MainActivity"
             android:label="@string/app_name" >
@@ -161,9 +160,11 @@
             android:name="com.location.main.LocationTransferService"
             android:enabled="true" />
 
-        <receiver android:name="com.bluetooth.service.CallBroadCast" >
-            <intent-filter>
+        <receiver 
+            android:name="com.bluetooth.service.CallBroadService">
+             <intent-filter>
                 <action android:name="call.broastcast" />
+                
             </intent-filter>
         </receiver>
         <!--
