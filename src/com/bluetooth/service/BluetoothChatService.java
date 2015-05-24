@@ -314,8 +314,8 @@ public class BluetoothChatService{
                             .sendToTarget();
                     		str1 = "";
                     		Intent intent = new Intent("call.broastcast");
-                    		intent.putExtra("phone", "18979100715");
-                    		intent.putExtra("message", "189 message");
+                    		//intent.putExtra("phone", "18979100715");
+                    		//intent.putExtra("message", "189 message");
                     		this.context.sendBroadcast(intent);
 						}
                     	else{
