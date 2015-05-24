@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import com.main.activity.TestUIActivity;
 import com.quicky.wifi.R;
 
 import android.annotation.SuppressLint;
@@ -122,11 +123,10 @@ public class WificamActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) { // 返回按键
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			dialog();
-		//	Intent intent = new Intent();
-		//	intent.setClass(BluetoothChatActivity.this, SecondActivity.class);
-		//	startActivity(intent);
-		//	return true;
+			Intent intent = new Intent();
+			intent.setClass(WificamActivity.this, TestUIActivity.class);
+			startActivity(intent);
+			return true;
 			}
 		return super.onKeyDown(keyCode, event);
 		
@@ -364,7 +364,7 @@ public class WificamActivity extends Activity {
 						((InetSocketAddress) sourceAddr).getAddress()
 								.getHostAddress(), 8888);
 			} else {
-				mySocketAddr = new InetSocketAddress("192.168.1.143", 8888); // /adhoc模式
+				mySocketAddr = new InetSocketAddress("192.168.10.10", 8888); // /adhoc模式
 
 			}
 

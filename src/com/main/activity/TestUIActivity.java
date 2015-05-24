@@ -76,17 +76,7 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 				toastInfo("ע�ᰴť");
 			}
 		});
-        login_ImageButton = (ImageButton) findViewById(R.id.home_bn_login);
-        login_ImageButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(TestUIActivity.this,MainLogon.class);
-				startActivity(intent);
-				toastInfo("��¼��ť");
-			}
-		});
+
         
 //        home_img_bn_Layout = (LinearLayout) findViewById(R.id.bottom_home_layout_ly);
 //        home_img_bn_Layout.setOnClickListener(clickListener_home);
@@ -155,12 +145,12 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
     	Date date = new Date();
     	Calendar c = Calendar.getInstance();
     	c.setTime(date);
-    	String[] weekDays = {"������", "����һ", "���ڶ�", "������", "������", "������", "������"};
+    	String[] weekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     	int w = c.get(Calendar.DAY_OF_WEEK) - 1 ;
     	if (w < 0) {
 			w = 0;
 		}
-    	String mDate = c.get(Calendar.YEAR)+"��" + c.get(Calendar.MONTH) + "��" + c.get(Calendar.DATE) + "��  " + weekDays[w];
+    	String mDate = c.get(Calendar.YEAR)+"年" + c.get(Calendar.MONTH) + "月" + c.get(Calendar.DATE) + "日  " + weekDays[w];
     	return mDate;
     }
     private OnClickListener clickListener_home = new OnClickListener() {
@@ -296,15 +286,15 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
 		ImageView img = (ImageView)findViewById(ratioId[id]);
 		img.setSelected(false);
 	}
+
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			isRun = false;
-			finish();
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if(keyCode == KeyEvent.KEYCODE_BACK){
+    		moveTaskToBack(true);
+    		return true;
+    		}
+    	return super.onKeyDown(keyCode, event);
+    	}
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub

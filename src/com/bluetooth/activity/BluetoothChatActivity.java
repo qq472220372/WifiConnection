@@ -10,6 +10,7 @@ import com.baidu.mapapi.utils.DistanceUtil;
 import com.bluetooth.service.BluetoothChatService;
 import com.finding.main.LocationInfo;
 import com.finding.main.FindingActivity.MyLocationListenner;
+import com.main.activity.TestUIActivity;
 import com.quicky.wifi.R;
 
 import android.annotation.SuppressLint;
@@ -164,6 +165,9 @@ public class BluetoothChatActivity extends Activity {
 			public void onClick(View arg0) {
 				String phone = PhoneEdit.getText().toString();
 				String message = MessageEdit.getText().toString();
+				if(Latintude!=0&&Longitude!=0){
+					message += "经纬度：（"+Latintude+","+Longitude+")";
+				}
 				Editor editor = mShared.edit();
 				editor.putString(KEY_PHONE, phone);
 				editor.putString(KEY_MESSAGE, message);
@@ -392,7 +396,7 @@ public class BluetoothChatActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			Intent intent = new Intent();
-			intent.setClass(BluetoothChatActivity.this, SecondActivity.class);
+			intent.setClass(BluetoothChatActivity.this, TestUIActivity.class);
 			startActivity(intent);
 			return true;
 		}

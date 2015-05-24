@@ -32,14 +32,14 @@ public class CallBroadCast extends BroadcastReceiver {
 						}catch(Exception e){
 							e.printStackTrace();
 						}
-						Toast.makeText(arg0, "���ͳɹ�!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(arg0, "发送成功!", Toast.LENGTH_SHORT).show();
 						}	
 					else{
-						Toast.makeText(arg0, "���Ų�������Ϊ��", Toast.LENGTH_LONG).show();
+						Toast.makeText(arg0, "短信不能输入为空", Toast.LENGTH_LONG).show();
 						}	
 					}
 				else{
-					Toast.makeText(arg0, "���벻������Ϊ��", Toast.LENGTH_LONG).show();
+					Toast.makeText(arg0, "号码不能输入为空", Toast.LENGTH_LONG).show();
 					}	
 		    }
 

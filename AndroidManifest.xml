@@ -161,7 +161,7 @@
             android:enabled="true" />
 
         <receiver 
-            android:name="com.bluetooth.service.CallBroadService">
+            android:name="com.bluetooth.service.CallBroadCast">
              <intent-filter>
                 <action android:name="call.broastcast" />
                 
