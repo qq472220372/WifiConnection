@@ -3,11 +3,14 @@ package com.bluetooth.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Random;
 import java.util.UUID;
 
 import com.bluetooth.activity.BluetoothChatActivity;
 
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -25,6 +28,7 @@ import android.util.Log;
 import android.widget.EditText;
 public class BluetoothChatService{
 	private EditText PhoneEdit;
+	private EditText MessageEdit;
 	
     private static final String TAG = "BluetoothChatService";
     private static final boolean D = true;
@@ -147,12 +151,17 @@ public class BluetoothChatService{
 
     
     private void connectionLost() {
- 
+    	int i=0;
         Message msg = mHandler.obtainMessage(BluetoothChatActivity.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
         bundle.putString(BluetoothChatActivity.TOAST, "设备断开连接");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
+        NotificationManager mgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification nt = new Notification();
+        nt.defaults = Notification.DEFAULT_SOUND;
+        int soundId = new Random(System.currentTimeMillis()).nextInt(Integer.MAX_VALUE);
+        mgr.notify(soundId, nt);
     }
 
    
@@ -308,14 +317,16 @@ public class BluetoothChatService{
                     String str = bytes2HexString(buffer).replaceAll("00","").trim();
                     if(bytes>0)
                     {	
-                    	if (str.endsWith("0D")) {
+                    	if (str.endsWith("OD")) {          	
+                    		String phone = PhoneEdit.getText().toString();
+                    		String message = MessageEdit.getText().toString();
                     		byte[] buffer1 = (str1+readStr).getBytes();
                     		mHandler.obtainMessage(BluetoothChatActivity.MESSAGE_READ, buffer1.length, -1, buffer1)
                             .sendToTarget();
                     		str1 = "";
                     		Intent intent = new Intent("call.broastcast");
-                    		//intent.putExtra("phone", "18979100715");
-                    		//intent.putExtra("message", "189 message");
+                    		intent.putExtra("phone", phone);
+                    		intent.putExtra("message", message);
                     		this.context.sendBroadcast(intent);
 						}
                     	else{
