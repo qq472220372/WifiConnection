@@ -25,10 +25,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.telephony.gsm.SmsManager;
 import android.util.Log;
+import android.view.TextureView;
 import android.widget.EditText;
+import android.widget.TextView;
 public class BluetoothChatService{
 	private EditText PhoneEdit;
 	private EditText MessageEdit;
+	private TextView textview; 
 	
     private static final String TAG = "BluetoothChatService";
     private static final boolean D = true;
@@ -324,10 +327,10 @@ public class BluetoothChatService{
                     		mHandler.obtainMessage(BluetoothChatActivity.MESSAGE_READ, buffer1.length, -1, buffer1)
                             .sendToTarget();
                     		str1 = "";
-                    		Intent intent = new Intent("call.broastcast");
-                    		intent.putExtra("phone", phone);
-                    		intent.putExtra("message", message);
-                    		this.context.sendBroadcast(intent);
+//                    		Intent intent = new Intent("call.broastcast");
+//                    		intent.putExtra("phone", phone);
+//                    		intent.putExtra("message", message);
+//                    		this.context.sendBroadcast(intent);
 						}
                     	else{
                     		if (!str.contains("0A")) {
