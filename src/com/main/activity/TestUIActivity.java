@@ -150,7 +150,7 @@ public class TestUIActivity extends Activity implements OnGestureListener, OnTou
     	if (w < 0) {
 			w = 0;
 		}
-    	String mDate = c.get(Calendar.YEAR)+"年" + c.get(Calendar.MONTH) + "月" + c.get(Calendar.DATE) + "日  " + weekDays[w];
+    	String mDate = c.get(Calendar.YEAR)+"年" + (Integer.valueOf(c.get(Calendar.MONTH))+1) + "月" + c.get(Calendar.DATE) + "日  " + weekDays[w];
     	return mDate;
     }
     private OnClickListener clickListener_home = new OnClickListener() {

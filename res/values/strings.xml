@@ -7,7 +7,7 @@
     <string name="hello">Hello World, ChatActivity!</string>
     <string name="myDisplayName">我</string>
     <string name="title_activity_search">MainActivity</string>
-    <string name="title_activity_conn">ConnActivity</string>
+    <string name="title_activity_conn">Quickey</string>
     <string name="hello_world">Hello world!</string>
     <string name="select_dir">Select Directory</string>
     <string name="file_browser_title">File Browser</string>
