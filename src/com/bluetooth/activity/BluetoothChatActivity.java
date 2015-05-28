@@ -1,7 +1,12 @@
 package com.bluetooth.activity;
 
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.bluetooth.service.BluetoothChatService;
+import com.finding.main.LocationInfo;
 import com.main.activity.TestUIActivity;
 import com.quicky.wifi.R;
 
@@ -45,6 +50,15 @@ public class BluetoothChatActivity extends Activity {
 	private EditText MessageEdit;
 	private TextView textview;
 	
+	// 定位相关
+	LocationClient mLocClient;
+	public MyLocationListenner myListener = new MyLocationListenner();
+	boolean isFirstLoc = true;// 是否首次定位
+	boolean isCorrect = true;
+	private LocationInfo locationInfo = new LocationInfo();
+	public static double Latintude = 0;
+	public static double Longitude = 0;
+	
 	SharedPreferences mShared = null;
 	public final static String SHARED_MAIN = "contact";
 	public final static String KEY_PHONE = "phone";
@@ -81,10 +95,41 @@ public class BluetoothChatActivity extends Activity {
 
 	private BluetoothChatService mChatService = null;
 
+	/**
+	 * 定位SDK监听函数
+	 */
+	public class MyLocationListenner implements BDLocationListener {
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+
+			Toast.makeText(getApplicationContext(), location.getLatitude()+","+
+					location.getLongitude(),
+					Toast.LENGTH_SHORT).show();
+			if(location.getLatitude()!=4.9E-324){
+            Latintude = location.getLatitude();
+            Longitude = location.getLongitude();
+			}
+		}
+
+		public void onReceivePoi(BDLocation poiLocation) {
+		}
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+			// 定位初始化
+			mLocClient = new LocationClient(this);
+			mLocClient.registerLocationListener(myListener);
+			LocationClientOption option = new LocationClientOption();
+			option.setOpenGps(true);// 打开gps
+			option.setCoorType("bd09ll"); // 设置坐标类型
+			option.setScanSpan(1000);
+			mLocClient.setLocOption(option);
+			mLocClient.start();
+		
 		if (D)
 			Log.e(TAG, "+++ ON CREATE +++");
 
@@ -121,6 +166,9 @@ public class BluetoothChatActivity extends Activity {
 			public void onClick(View arg0) {
 				String phone = PhoneEdit.getText().toString();
 				String message = MessageEdit.getText().toString();
+							if(Latintude!=0&&Longitude!=0){
+							message += "经纬度：（"+Latintude+","+Longitude+")";
+								}
 				Editor editor = mShared.edit();
 				editor.putString(KEY_PHONE, phone);
 				editor.putString(KEY_MESSAGE, message);
@@ -142,6 +190,9 @@ public class BluetoothChatActivity extends Activity {
 	private void call() {
 		String phone = PhoneEdit.getText().toString();
 		String message = MessageEdit.getText().toString();
+			if(Latintude!=0&&Longitude!=0){
+					message += "经纬度：（"+Latintude+","+Longitude+")";
+				}
 //		Intent intent = new Intent();
 		if (phone.trim().length() != 0) {
 			Intent intent2 = new Intent();
